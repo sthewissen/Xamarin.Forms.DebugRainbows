@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage BackgroundColor="#f3f5f6" debug:DebugRainbow.IsDebug="true" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Traveler" x:Class="Traveler.MainPage" 
+             xmlns:custom="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:effect="clr-namespace:Traveler.Effects" xmlns:debug="clr-namespace:Xamarin.Forms.DebugRainbows.Platforms.Shared;assembly=Xamarin.Forms.DebugRainbows">
+    <StackLayout>
+        <custom:PancakeView HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="400">
+            <Grid>
+                <Image Source="seattle.jpg" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill" />
+                <StackLayout>
+                    <StackLayout Spacing="0" VerticalOptions="Start" Orientation="Horizontal">
+                        <StackLayout.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0,12,0,0" />
+                                <On Platform="Android" Value="0,24,0,0" />
+                            </OnPlatform>
+                        </StackLayout.Margin>
+                        <StackLayout.Effects>
+                            <effect:SafeAreaPaddingEffect />
+                        </StackLayout.Effects>
+                        <StackLayout Margin="20,0,20,0" Spacing="0">
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="20,0,20,0" />
+                                    <On Platform="Android" Value="20,0,20,20" />
+                                </OnPlatform>
+                            </StackLayout.Margin>
+                            <Label TextColor="#fff" FontFamily="{StaticResource LatoBlack}" FontSize="22" Text="Hi Steven," />
+                            <Label TextColor="#fff" FontFamily="{StaticResource LatoBlack}" FontSize="22" Text="Where do you want to go?" />
+                        </StackLayout>
+                        <Label Text="" FontSize="24" Margin="0,0,20,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontFamily="{StaticResource FontAwesomeRegular}" TextColor="#fff" />
+                    </StackLayout>
+                    <custom:PancakeView Margin="20,0" HeightRequest="50" BackgroundColor="#44ffffff" CornerRadius="8" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center" Margin="20,0">
+                            <Label FontSize="20" VerticalOptions="Center" TextColor="#fff" FontFamily="{StaticResource FontAwesomeSolid}" Text="" Margin="0,0,12,0" />
+                            <Entry FontFamily="{StaticResource LatoRegular}" TextColor="#fff" BackgroundColor="Transparent" VerticalOptions="Center" HorizontalOptions="FillAndExpand" />
+                        </StackLayout>
+                    </custom:PancakeView>
+                </StackLayout>
+                <custom:PancakeView HeightRequest="100" BackgroundColor="#aaeeeeee" HorizontalOptions="FillAndExpand" VerticalOptions="End">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0" Margin="20,0,0,0" Spacing="0" VerticalOptions="Center">
+                            <Label Text="Seattle, USA" FontSize="24" FontFamily="{StaticResource LatoBold}" />
+                            <Label Text="Recommendation" TextColor="#666" FontSize="16" FontFamily="{StaticResource LatoRegular}" />
+                        </StackLayout>
+                        <StackLayout Grid.Column="1" Spacing="0" Margin="0,0,20,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                            <Label FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="" TextColor="#ffac2c" />
+                                        <Span Text="" TextColor="#dddee0" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Margin="0,8,0,0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Recommendation" TextColor="#666" FontSize="16" FontFamily="{StaticResource LatoRegular}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="4.3 " FontSize="16" FontFamily="{StaticResource LatoBold}" TextColor="#2a2a2a" />
+                                        <Span Text="(3478 views)" FontSize="12" FontFamily="{StaticResource LatoRegular}" TextColor="#2a2a2a" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                    </Grid>
+                </custom:PancakeView>
+            </Grid>
+        </custom:PancakeView>
+        <StackLayout Orientation="Horizontal">
+            <Label HorizontalOptions="Start" VerticalOptions="Center" Text="Hot places" FontFamily="{StaticResource LatoBold}" FontSize="20" Margin="20,20,20,0" />
+            <Label HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#2687ee" Text="SEE ALL" FontSize="12" FontFamily="{StaticResource LatoBold}" Margin="20,20,20,0" />
+        </StackLayout>
+        <CollectionView ItemsLayout="{x:Static ListItemsLayout.HorizontalList}" ItemSizingStrategy="MeasureFirstItem" ItemsSource="{Binding Destinations}" HeightRequest="120">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10,0">
+                        <custom:PancakeView HeightRequest="120" WidthRequest="200" IsClippedToBounds="true" CornerRadius="12">
+                            <Grid>
+                                <Image Aspect="AspectFill" Source="{Binding ImageUrl}" />
+                                <custom:PancakeView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundGradientStartColor="Transparent" BackgroundGradientEndColor="#222" />
+                                <StackLayout Spacing="0" Margin="12" VerticalOptions="EndAndExpand">
+                                    <Label FontSize="16" FontFamily="{StaticResource LatoBold}" TextColor="#fff" Text="{Binding Title}" />
+                                    <Label FontSize="12" FontFamily="{StaticResource LatoRegular}" TextColor="#ccc" Text="{Binding RatingVotes}" />
+                                </StackLayout>
+                            </Grid>
+                        </custom:PancakeView>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <!--Alternative implementation-->
+        <!--<ScrollView Orientation="Horizontal">
+            <StackLayout Spacing="0" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding Destinations}" HeightRequest="120">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10,0">
+                            <custom:PancakeView HeightRequest="120" WidthRequest="200" IsClippedToBounds="true" CornerRadius="12">
+                                <Grid>
+                                    <Image Aspect="AspectFill" Source="{Binding ImageUrl}" />
+                                    <custom:PancakeView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundGradientStartColor="Transparent" BackgroundGradientEndColor="#222" />
+                                    <StackLayout Spacing="0" Margin="12" VerticalOptions="EndAndExpand">
+                                        <Label FontSize="16" FontFamily="{StaticResource LatoBold}" TextColor="#fff" Text="{Binding Title}" />
+                                        <Label FontSize="12" FontFamily="{StaticResource LatoRegular}" TextColor="#ccc" Text="{Binding RatingVotes}" />
+                                    </StackLayout>
+                                </Grid>
+                            </custom:PancakeView>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>-->
+        <StackLayout Orientation="Horizontal">
+            <Label HorizontalOptions="Start" VerticalOptions="Center" Text="Categories" FontFamily="{StaticResource LatoBold}" FontSize="20" Margin="20,20,20,0" />
+            <Label HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#2687ee" Text="SEE ALL" FontSize="12" FontFamily="{StaticResource LatoBold}" Margin="20,20,20,0" />
+        </StackLayout>
+        <ScrollView Orientation="Horizontal">
+            <StackLayout Margin="20,12,20,0" Orientation="Horizontal">
+                <custom:PancakeView BackgroundColor="#5d6dff" Margin="0,0,4,0" HeightRequest="60" WidthRequest="160" CornerRadius="12">
+                    <Label HorizontalTextAlignment="Center" VerticalOptions="Center" FontSize="16" FontFamily="{StaticResource LatoBold}" TextColor="#fff">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text=" " FontFamily="{StaticResource FontAwesomeSolid}" />
+                                <Span FontSize="16" Text="Art &amp; Cultures" FontFamily="{StaticResource LatoRegular}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </custom:PancakeView>
+                <custom:PancakeView BackgroundColor="#37d2ff" Margin="0,0,4,0" HeightRequest="60" WidthRequest="160" CornerRadius="12">
+                    <Label HorizontalTextAlignment="Center" VerticalOptions="Center" FontSize="16" FontFamily="{StaticResource LatoBold}" TextColor="#fff">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text=" " FontFamily="{StaticResource FontAwesomeSolid}" />
+                                <Span FontSize="16" Text="Adventure" FontFamily="{StaticResource LatoRegular}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </custom:PancakeView>
+                <custom:PancakeView BackgroundColor="#2687ee" Margin="0,0,4,0" HeightRequest="60" WidthRequest="160" CornerRadius="12">
+                    <Label HorizontalTextAlignment="Center" VerticalOptions="Center" FontSize="16" FontFamily="{StaticResource LatoBold}" TextColor="#fff">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text=" " FontFamily="{StaticResource FontAwesomeSolid}" />
+                                <Span FontSize="16" Text="Art &amp; Cultures" FontFamily="{StaticResource LatoRegular}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </custom:PancakeView>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

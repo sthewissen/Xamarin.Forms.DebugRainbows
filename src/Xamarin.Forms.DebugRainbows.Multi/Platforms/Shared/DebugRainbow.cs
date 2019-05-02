@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xamarin.Forms.DebugRainbows.Platforms.Shared
+namespace Xamarin.Forms.DebugRainbows
 {
     public static class DebugRainbow
     {

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Traveler.App">
+    <Application.Resources>
+        <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular">
+            <On Platform="iOS" Value="FontAwesome5Free-Regular" />
+            <On Platform="Android" Value="fa-regular.otf#Regular" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeSolid">
+            <On Platform="iOS" Value="FontAwesome5Free-Solid" />
+            <On Platform="Android" Value="fa-solid.otf#Solid" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="LatoBlack">
+            <On Platform="iOS" Value="Lato-Black" />
+            <On Platform="Android" Value="Lato-Black.ttf#Regular" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="LatoBold">
+            <On Platform="iOS" Value="Lato-Bold" />
+            <On Platform="Android" Value="Lato-Bold.ttf#Bold" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="LatoRegular">
+            <On Platform="iOS" Value="Lato-Regular" />
+            <On Platform="Android" Value="Lato-Regular.ttf#Regular" />
+        </OnPlatform>
+    </Application.Resources>
+</Application>

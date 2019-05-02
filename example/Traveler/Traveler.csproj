@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.250467-pre7" />
+    <PackageReference Include="LiveXAML" Version="2.1.70" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.0.21" />
+    <PackageReference Include="Xamarin.Forms.DebugRainbows" Version="1.0.1-beta" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Effects\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>
