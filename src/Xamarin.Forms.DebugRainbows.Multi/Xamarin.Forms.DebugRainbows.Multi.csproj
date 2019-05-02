@@ -28,8 +28,8 @@
     <PackageTags>xamarin, ios, android, xamarin.forms, control, rounded corners, gradient, view</PackageTags>
 
     <Title>DebugRainbows for Xamarin.Forms</Title>
-    <Summary></Summary>
-    <Description></Description>
+    <Summary>The package you didn't even know you needed! Adds a very colorful debug mode to each of your ContentPages that lets you immediately see where all of your elements are located.</Summary>
+    <Description>The package you didn't even know you needed! Adds a very colorful debug mode to each of your ContentPages that lets you immediately see where all of your elements are located.</Description>
 
     <Owners>Steven Thewissen</Owners>
     <Authors>Steven Thewissen</Authors>
