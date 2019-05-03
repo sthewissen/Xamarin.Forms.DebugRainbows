@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Xamarin.Forms.DebugRainbows
 {
@@ -21,12 +21,12 @@ namespace Xamarin.Forms.DebugRainbows
         static void OnIsDebugChanged(BindableObject bindable, bool oldValue, bool newValue)
         {
             // Property changed implementation goes here
-            if (bindable.GetType().IsSubclassOf(typeof(ContentPage)))
+            if (bindable.GetType().IsSubclassOf(typeof(Page)))
             {
                 if (newValue)
-                    (bindable as ContentPage).Appearing += Page_Appearing;
+                    (bindable as Page).Appearing += Page_Appearing;
                 else
-                    (bindable as ContentPage).Appearing -= Page_Appearing;
+                    (bindable as Page).Appearing -= Page_Appearing;
             }
         }
 
@@ -35,6 +35,18 @@ namespace Xamarin.Forms.DebugRainbows
             if (sender.GetType().IsSubclassOf(typeof(ContentPage)))
             {
                 IterateChildren((sender as ContentPage).Content);
+            }
+            else if (sender is IViewContainer<Page>)
+            {
+                var tabbedPage = sender as IViewContainer<Page>;
+
+                foreach (var item in tabbedPage.Children)
+                {
+                    if (item is ContentPage)
+                    {
+                        IterateChildren(((ContentPage)item).Content);
+                    }
+                }
             }
         }
 
@@ -46,18 +58,21 @@ namespace Xamarin.Forms.DebugRainbows
 
         private static void IterateChildren(Element content)
         {
-            if (content.GetType().IsSubclassOf(typeof(Layout)))
+            if (content != null)
             {
-                ((Layout)content).BackgroundColor = GetRandomColor();
-
-                foreach (var item in ((Layout)content).Children)
+                if (content.GetType().IsSubclassOf(typeof(Layout)))
                 {
-                    IterateChildren(item);
+                    ((Layout)content).BackgroundColor = GetRandomColor();
+
+                    foreach (var item in ((Layout)content).Children)
+                    {
+                        IterateChildren(item);
+                    }
                 }
-            }
-            else if (content.GetType().IsSubclassOf(typeof(View)))
-            {
-                ((View)content).BackgroundColor = GetRandomColor();
+                else if (content.GetType().IsSubclassOf(typeof(View)))
+                {
+                    ((View)content).BackgroundColor = GetRandomColor();
+                }
             }
         }
     }
