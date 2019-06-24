@@ -20,10 +20,10 @@ https://www.nuget.org/packages/Xamarin.Forms.DebugRainbows
 Install this package into your shared project. There is no need to install it in your platform specific projects. After that you're good to go! Simply add the namespace declaration and the new `IsDebug` attached property and set it to `true`!
 
 ```
-<ContentPage local:DebugRainbow.IsDebug="true" 
+<ContentPage rainbows:DebugRainbow.IsDebug="true" 
    xmlns="http://xamarin.com/schemas/2014/forms" 
    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-   xmlns:local="clr-namespace:Xamarin.Forms.DebugRainbows; assembly=Xamarin.Forms.DebugRainbows" 
+   xmlns:rainbows="clr-namespace:Xamarin.Forms.DebugRainbows;assembly=Xamarin.Forms.DebugRainbows" 
    x:Class="SampleApp.MainPage">
              
   ...
