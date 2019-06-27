@@ -12,8 +12,8 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
     <PackageReference Include="LiveXAML" Version="2.1.72" />
-    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.0.21" />
-    <PackageReference Include="Xamarin.Forms.DebugRainbows" Version="1.0.5" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.0.24-beta" />
+    <PackageReference Include="Xamarin.Forms.DebugRainbows" Version="1.0.7-beta" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Effects\" />

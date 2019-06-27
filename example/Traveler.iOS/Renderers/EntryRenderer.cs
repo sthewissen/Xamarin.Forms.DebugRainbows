@@ -14,9 +14,12 @@ namespace Traveler.iOS.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-            Control.Layer.BorderWidth = 0;
-            Control.BorderStyle = UITextBorderStyle.None;
-            Control.TintColor = UIColor.White;
+            if (Control != null)
+            {
+                Control.Layer.BorderWidth = 0;
+                Control.BorderStyle = UITextBorderStyle.None;
+                Control.TintColor = UIColor.White;
+            }
         }
     }
 }
