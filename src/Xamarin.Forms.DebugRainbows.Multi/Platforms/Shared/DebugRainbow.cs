@@ -6,7 +6,7 @@ namespace Xamarin.Forms.DebugRainbows
     {
         private static readonly Random _randomGen = new Random();
 
-        public static readonly BindableProperty IsDebugProperty = BindableProperty.CreateAttached("IsDebug", typeof(bool), typeof(ContentPage), default(bool), propertyChanged: (b, o, n) => OnIsDebugChanged(b, (bool)o, (bool)n));
+        public static readonly BindableProperty IsDebugProperty = BindableProperty.CreateAttached("IsDebug", typeof(bool), typeof(VisualElement), default(bool), propertyChanged: (b, o, n) => OnIsDebugChanged(b, (bool)o, (bool)n));
 
         public static void SetIsDebug(BindableObject b, bool value)
         {
@@ -27,6 +27,21 @@ namespace Xamarin.Forms.DebugRainbows
                     (bindable as Page).Appearing += Page_Appearing;
                 else
                     (bindable as Page).Appearing -= Page_Appearing;
+            }
+            else if (bindable.GetType().IsSubclassOf(typeof(View)))
+            {
+                if (newValue)
+                    (bindable as View).SizeChanged += View_SizeChanged;
+                else
+                    (bindable as View).SizeChanged -= View_SizeChanged;
+            }
+        }
+
+        static void View_SizeChanged(object sender, EventArgs e)
+        {
+            if (sender.GetType().IsSubclassOf(typeof(View)))
+            {
+                IterateChildren((sender as View));
             }
         }
 
