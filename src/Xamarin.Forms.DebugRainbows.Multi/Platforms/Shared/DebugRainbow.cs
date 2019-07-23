@@ -20,6 +20,7 @@ namespace Xamarin.Forms.DebugRainbows
 
         static void OnIsDebugChanged(BindableObject bindable, bool oldValue, bool newValue)
         {
+#if DEBUG
             // Property changed implementation goes here
             if (bindable.GetType().IsSubclassOf(typeof(Page)))
             {
@@ -35,18 +36,22 @@ namespace Xamarin.Forms.DebugRainbows
                 else
                     (bindable as View).SizeChanged -= View_SizeChanged;
             }
+#endif
         }
 
         static void View_SizeChanged(object sender, EventArgs e)
         {
+#if DEBUG
             if (sender.GetType().IsSubclassOf(typeof(View)))
             {
                 IterateChildren((sender as View));
             }
+#endif
         }
 
         static void Page_Appearing(object sender, EventArgs e)
         {
+#if DEBUG
             if (sender.GetType().IsSubclassOf(typeof(ContentPage)))
             {
                 IterateChildren((sender as ContentPage).Content);
@@ -63,6 +68,7 @@ namespace Xamarin.Forms.DebugRainbows
                     }
                 }
             }
+#endif
         }
 
         public static Color GetRandomColor()

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Traveler.App">
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:debug="clr-namespace:Xamarin.Forms.DebugRainbows;assembly=Xamarin.Forms.DebugRainbows" x:Class="Traveler.App">
     <Application.Resources>
         <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular">
             <On Platform="iOS" Value="FontAwesome5Free-Regular" />
@@ -21,5 +22,12 @@
             <On Platform="iOS" Value="Lato-Regular" />
             <On Platform="Android" Value="Lato-Regular.ttf#Regular" />
         </OnPlatform>
+
+        <Style x:Key="debugPage" TargetType="ContentPage">
+            <Setter Property="debug:DebugRainbow.IsDebug" Value="true" />
+        </Style>
+        <Style TargetType="ContentPage">
+            <Setter Property="Style" Value="{StaticResource debugPage}" />
+        </Style>
     </Application.Resources>
 </Application>
