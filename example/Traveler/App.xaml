@@ -23,11 +23,12 @@
             <On Platform="Android" Value="Lato-Regular.ttf#Regular" />
         </OnPlatform>
 
-        <Style x:Key="debugPage" TargetType="ContentPage">
-            <Setter Property="debug:DebugRainbow.IsDebug" Value="true" />
+        <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
+            <Setter Property="debug:DebugRainbow.IsDebug" Value="false" />
         </Style>
-        <Style TargetType="ContentPage">
+        <!--<Style TargetType="ContentPage">
             <Setter Property="Style" Value="{StaticResource debugPage}" />
-        </Style>
+        </Style>-->
+
     </Application.Resources>
 </Application>
