@@ -26,9 +26,5 @@
         <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
             <Setter Property="debug:DebugRainbow.IsDebug" Value="false" />
         </Style>
-        <!--<Style TargetType="ContentPage">
-            <Setter Property="Style" Value="{StaticResource debugPage}" />
-        </Style>-->
-
     </Application.Resources>
 </Application>
