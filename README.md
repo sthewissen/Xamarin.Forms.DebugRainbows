@@ -30,3 +30,11 @@ Install this package into your shared project. There is no need to install it in
              
 </ContentPage>
 ```
+
+Want to apply it to each page in your app? You can do that by adding this `Style` to a `ResourceDictionary` in your `App.xaml` file.
+
+```
+<Style ApplyToDerivedTypes="True" TargetType="ContentPage">
+   <Setter Property="debug:DebugRainbow.IsDebug" Value="false" />
+</Style>
+```
