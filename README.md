@@ -28,7 +28,7 @@ Install this package into your shared project. There is no need to install it in
    xmlns="http://xamarin.com/schemas/2014/forms" 
    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
    xmlns:rainbows="clr-namespace:Xamarin.Forms.DebugRainbows;assembly=Xamarin.Forms.DebugRainbows" 
-   x:Class="SampleApp.MainPage">
+   x:Class="MyNamespace.MainPage">
              
   ...
              
