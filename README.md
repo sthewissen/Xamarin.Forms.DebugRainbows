@@ -37,18 +37,25 @@ Install this package into your shared project. There is no need to install it in
 
 **Apply to every `Xamarin.Forms.ContentPage`**
 
-In `App.xaml`, add this `Style` to your `ResourceDictionary`
+In `App.xaml`, we can add a `Style` to our `ResourceDictionary`
 
 ```xml
-<Application>
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MyNamespace.App"
+             xmlns:rainbows="clr-namespace:Xamarin.Forms.DebugRainbows;assembly=Xamarin.Forms.DebugRainbows" >
     <Application.Resources>
         <ResourceDictionary>
-            <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
-               <Setter Property="debug:DebugRainbow.IsDebug" Value="true" />
+            <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+               <Setter Property="rainbows:DebugRainbow.IsDebug" Value="True" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
-</Application>  
+</Application>
 ```
 
 ### Coded UI
@@ -69,6 +76,7 @@ public class App : Xamarin.Forms.Application
 {
     public App()
     {
+    
 #if DEBUG
         EnableDebugRainbows(true);
 #endif
@@ -76,20 +84,20 @@ public class App : Xamarin.Forms.Application
         //...
     });
     
-     void EnableDebugRainbows(bool shouldUseDebugRainbows)
-     {
-         Resources.Add(new Style(typeof(ContentPage))
-         {
-             ApplyToDerivedTypes = true,
-             Setters = {
-                 new Setter
-                 {
-                     Property = Xamarin.Forms.DebugRainbows.DebugRainbow.IsDebugProperty,
-                     Value = shouldUseDebugRainbows
-                 }
-             }
-         });
-     }
+    void EnableDebugRainbows(bool shouldUseDebugRainbows)
+    {
+        Resources.Add(new Style(typeof(ContentPage))
+        {
+            ApplyToDerivedTypes = true,
+            Setters = {
+                new Setter
+                {
+                    Property = Xamarin.Forms.DebugRainbows.DebugRainbow.IsDebugProperty,
+                    Value = shouldUseDebugRainbows
+                }
+            }
+        });
+    }
  }
  ```
             
