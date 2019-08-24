@@ -37,7 +37,7 @@ Apply to `Xamarin.Forms.ContentPage`
 
 Apply to entire App in `App.xaml`
 
-```
+```xml
 <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
    <Setter Property="debug:DebugRainbow.IsDebug" Value="false" />
 </Style>
