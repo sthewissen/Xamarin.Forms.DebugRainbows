@@ -21,7 +21,7 @@ Install this package into your shared project. There is no need to install it in
 
 ### XAML UI
 
-Apply to an individual `Xamarin.Forms.ContentPage`
+**Apply to an individual `Xamarin.Forms.ContentPage`**
 
 ```xml
 <ContentPage rainbows:DebugRainbow.IsDebug="true" 
@@ -35,19 +35,25 @@ Apply to an individual `Xamarin.Forms.ContentPage`
 </ContentPage>
 ```
 
-Apply to every `Xamarin.Forms.ContentPage`
+**Apply to every `Xamarin.Forms.ContentPage`**
 
 In `App.xaml`, add this `Style` to your `ResourceDictionary`
 
 ```xml
-<Style ApplyToDerivedTypes="True" TargetType="ContentPage">
-   <Setter Property="debug:DebugRainbow.IsDebug" Value="true" />
-</Style>
+<Application>
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
+               <Setter Property="debug:DebugRainbow.IsDebug" Value="true" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>  
 ```
 
 ### Coded UI
 
-Apply to an individual `Xamarin.Forms.ContentPage`
+**Apply to an individual `Xamarin.Forms.ContentPage`**
 
 ```csharp
 public MyContentPage : ContentPage
@@ -56,7 +62,7 @@ public MyContentPage : ContentPage
 }
 ```
 
-Apply to every `Xamarin.Forms.ContentPage`
+**Apply to every `Xamarin.Forms.ContentPage`**
 
 ```csharp
 public class App : Xamarin.Forms.Application
