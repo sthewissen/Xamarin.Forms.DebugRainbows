@@ -21,7 +21,7 @@ Install this package into your shared project. There is no need to install it in
 
 ### XAML UI
 
-Apply to `Xamarin.Forms.ContentPage`
+Apply to an individual `Xamarin.Forms.ContentPage`
 
 ```xml
 <ContentPage rainbows:DebugRainbow.IsDebug="true" 
@@ -35,17 +35,19 @@ Apply to `Xamarin.Forms.ContentPage`
 </ContentPage>
 ```
 
-Apply to entire App in `App.xaml`
+Apply to every `Xamarin.Forms.ContentPage`
+
+In `App.xaml`, add this `Style` to your `ResourceDictionary`
 
 ```xml
 <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
-   <Setter Property="debug:DebugRainbow.IsDebug" Value="false" />
+   <Setter Property="debug:DebugRainbow.IsDebug" Value="true" />
 </Style>
 ```
 
 ### Coded UI
 
-Apply to `Xamarin.Forms.ContentPage`
+Apply to an individual `Xamarin.Forms.ContentPage`
 
 ```csharp
 public MyContentPage : ContentPage
@@ -53,5 +55,33 @@ public MyContentPage : ContentPage
     Xamarin.Forms.DebugRainbows.DebugRainbow.SetIsDebug(this, true);
 }
 ```
+
+Apply to every `Xamarin.Forms.ContentPage`
+
+```csharp
+public class App : Xamarin.Forms.Application
+{
+    public App()
+    {
+        EnableDebugRainbows(true);
+        //...
+    });
+    
+    void EnableDebugRainbows(bool shouldUseDebugRainbows)
+    {
+        Resources.Add(new Style(typeof(ContentPage))
+        {
+            ApplyToDerivedTypes = true,
+            Setters = {
+                new Setter
+                {
+                    Property = Xamarin.Forms.DebugRainbows.DebugRainbow.IsDebugProperty,
+                    Value = shouldUseDebugRainbows
+                }
+        }
+    }
+ }
+ ```
+            
 
 
