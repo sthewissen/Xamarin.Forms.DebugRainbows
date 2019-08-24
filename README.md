@@ -84,6 +84,7 @@ public class App : Xamarin.Forms.Application
                     Property = Xamarin.Forms.DebugRainbows.DebugRainbow.IsDebugProperty,
                     Value = shouldUseDebugRainbows
                 }
+             }
         }
     }
  }
