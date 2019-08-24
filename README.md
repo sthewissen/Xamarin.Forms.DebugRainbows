@@ -69,24 +69,27 @@ public class App : Xamarin.Forms.Application
 {
     public App()
     {
+#if DEBUG
         EnableDebugRainbows(true);
+#endif
+        
         //...
     });
     
-    void EnableDebugRainbows(bool shouldUseDebugRainbows)
-    {
-        Resources.Add(new Style(typeof(ContentPage))
-        {
-            ApplyToDerivedTypes = true,
-            Setters = {
-                new Setter
-                {
-                    Property = Xamarin.Forms.DebugRainbows.DebugRainbow.IsDebugProperty,
-                    Value = shouldUseDebugRainbows
-                }
+     void EnableDebugRainbows(bool shouldUseDebugRainbows)
+     {
+         Resources.Add(new Style(typeof(ContentPage))
+         {
+             ApplyToDerivedTypes = true,
+             Setters = {
+                 new Setter
+                 {
+                     Property = Xamarin.Forms.DebugRainbows.DebugRainbow.IsDebugProperty,
+                     Value = shouldUseDebugRainbows
+                 }
              }
-        }
-    }
+         });
+     }
  }
  ```
             
