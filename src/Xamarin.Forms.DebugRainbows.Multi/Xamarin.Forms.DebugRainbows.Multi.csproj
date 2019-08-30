@@ -73,6 +73,8 @@
   <ItemGroup>
     <Folder Include="Platforms\" />
     <Folder Include="Platforms\Shared\" />
+    <Folder Include="Platforms\iOS\" />
+    <Folder Include="Platforms\Android\" />
   </ItemGroup>
    <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

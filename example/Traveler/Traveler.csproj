@@ -10,10 +10,54 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.581479" />
-    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.0.25-beta" />
+    <PackageReference Include="Anotar.Splat.Fody" Version="5.1.0" />
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="3.0.0" NoWarn="NU1701" />
+    <PackageReference Include="Dynamensions.DesignPatterns.MVVM" Version="2019.3.28.2" />
+    <PackageReference Include="ExpandableView" Version="1.0.9" />
+    <PackageReference Include="Fody" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MethodTimer.Fody" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
+    <PackageReference Include="Plugin.Badge" Version="2.2.1" />
+    <PackageReference Include="Plugin.Fingerprint" Version="1.4.9" />
+    <PackageReference Include="Plugins.Forms.ButtonCircle" Version="2.0.3" />
+    <PackageReference Include="Prism.Core" Version="7.1.0.431" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Prism.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Prism.Plugin.Popups" Version="2.2.0.293" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.4.1-beta" />
+        
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfCalendar" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPdfViewer" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfSchedule" Version="17.2.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="17.2.0.46" />
+        
+        
+    <PackageReference Include="Xamarin.Forms" Version="4.1.0.709244" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.0" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.1.8" />
+    <PackageReference Include="Xamarin.Forms.StateSquid" Version="1.0.3-beta" />
+        
+    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="4.1.0.709244" />
+    <PackageReference Include="Xamarin.HotReload" Version="1.4.15" />
+    <PackageReference Include="UXDivers.Effects" Version="0.6.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
     <PackageReference Include="Xamarin.Forms.DebugRainbows" Version="1.0.16" />
   </ItemGroup>
+    
   <ItemGroup>
     <Folder Include="Effects\" />
     <Folder Include="Models\" />

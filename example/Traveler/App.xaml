@@ -24,7 +24,7 @@
         </OnPlatform>
 
         <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
-            <Setter Property="debug:DebugRainbow.IsDebug" Value="false" />
+            <Setter Property="debug:DebugRainbow.IsDebug" Value="true" />
         </Style>
     </Application.Resources>
 </Application>
