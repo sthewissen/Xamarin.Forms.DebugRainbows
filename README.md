@@ -3,7 +3,7 @@
 # Xamarin.Forms.DebugRainbows
 The package you didn't even know you needed!
 
-[![Build status](https://sthewissen.visualstudio.com/DebugRainbows/_apis/build/status/DebugRainbows-Deployment-CI)]() ![](https://img.shields.io/nuget/vpre/Xamarin.Forms.DebugRainbows.svg)
+[![Build status](https://sthewissen.visualstudio.com/DebugRainbows/_apis/build/status/DebugRainbows-Deployment-CI)]() [![NuGet](https://img.shields.io/nuget/vpre/Xamarin.Forms.DebugRainbows.svg)](https://www.nuget.org/packages/Xamarin.Forms.DebugRainbows)
 
 ## Why DebugRainbows?
 
