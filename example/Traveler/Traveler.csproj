@@ -11,11 +11,14 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.581479" />
-    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.0.25-beta" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.2.1" />
     <PackageReference Include="Xamarin.Forms.DebugRainbows" Version="1.0.16" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Effects\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.DebugRainbows.Multi\Xamarin.Forms.DebugRainbows.Multi.csproj" />
   </ItemGroup>
 </Project>
