@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage BackgroundColor="#f3f5f6" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Traveler.MainPage" 
+<ContentPage BackgroundColor="#f3f5f6" debug:DebugRainbow.IsDebug="false" debug:DebugGrid.IsDebug="True"
+             debug:DebugGrid.HorizontalSpacing="30" debug:DebugGrid.VerticalSpacing="30"
+             debug:DebugGrid.MajorGridLineColor="Red" debug:DebugGrid.MinorGridLineColor="DarkRed"
+             debug:DebugGrid.MajorGridLineInterval="4" debug:DebugGrid.MajorGridLineOpacity="0.7"
+             debug:DebugGrid.MinorGridLineOpacity="0.3" debug:DebugGrid.MajorGridLineThickness="5"
+             debug:DebugGrid.MinorGridLineThickness="1" debug:DebugGrid.Padding="10"
+             xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Traveler.MainPage" 
              xmlns:custom="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:effect="clr-namespace:Traveler.Effects"
              xmlns:debug="clr-namespace:Xamarin.Forms.DebugRainbows;assembly=Xamarin.Forms.DebugRainbows">
     <StackLayout>
@@ -17,7 +23,7 @@
                         <StackLayout.Effects>
                             <effect:SafeAreaPaddingEffect />
                         </StackLayout.Effects>
-                        <StackLayout Margin="20,0,20,0" Spacing="0">
+                        <StackLayout Margin="20,0" Spacing="0">
                             <StackLayout.Margin>
                                 <OnPlatform x:TypeArguments="Thickness">
                                     <On Platform="iOS" Value="20,0,20,0" />

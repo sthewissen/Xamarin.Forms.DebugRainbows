@@ -1,78 +1,57 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.61">
-
-  <PropertyGroup>
-  	<TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81;MonoAndroid90</TargetFrameworks>
-    
-    <!--Assembly and Namespace info -->
-    <AssemblyName>Xamarin.Forms.DebugRainbows</AssemblyName>
-    <RootNamespace>Xamarin.Forms.DebugRainbows</RootNamespace>
-    
-    <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>1.0.0.0</Version>
-    <PackOnBuild>true</PackOnBuild>
-    <NeutralLanguage>en</NeutralLanguage>
-    <LangVersion>default</LangVersion>
-    <DefineConstants>$(DefineConstants);</DefineConstants>
-     
-    <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-
-    <LangVersion>latest</LangVersion>
-
-    <PackageLicenseUrl>https://github.com/sthewissen/Xamarin.Forms.DebugRainbows/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/sthewissen/Xamarin.Forms.DebugRainbows</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/sthewissen/Xamarin.Forms.DebugRainbows/master/images/icon.png</PackageIconUrl>
-    <RepositoryUrl>https://github.com/sthewissen/Xamarin.Forms.DebugRainbows</RepositoryUrl>
-    <PackageTags>xamarin, ios, android, xamarin.forms, control, rounded corners, gradient, view</PackageTags>
-
-    <Title>DebugRainbows for Xamarin.Forms</Title>
-    <Summary>The package you didn't even know you needed! Adds a very colorful debug mode to each of your ContentPages that lets you immediately see where all of your elements are located.</Summary>
-    <Description>The package you didn't even know you needed! Adds a very colorful debug mode to each of your ContentPages that lets you immediately see where all of your elements are located.</Description>
-
-    <Owners>Steven Thewissen</Owners>
-    <Authors>Steven Thewissen</Authors>
-    <Copyright>Copyright 2019 Steven Thewissen</Copyright>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    
-  </PropertyGroup>
-  
-  <!-- Define what happens on build and release -->
-   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <DebugType>pdbonly</DebugType>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Include="Platforms\Shared\**\*.cs" />
-
-    <!--NuGet that bring in good stuff -->
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.129452" />
-
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-    <Compile Include="Platforms\iOS\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-    <Compile Include="Platforms\Android\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Platforms\" />
-    <Folder Include="Platforms\Shared\" />
-  </ItemGroup>
-   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="MSBuild.Sdk.Extras/2.0.41">
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81;MonoAndroid90</TargetFrameworks>
+        <!--Assembly and Namespace info -->
+        <AssemblyName>Xamarin.Forms.DebugRainbows</AssemblyName>
+        <RootNamespace>Xamarin.Forms.DebugRainbows</RootNamespace>
+        <Product>$(AssemblyName) ($(TargetFramework))</Product>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+        <Version>1.0.0.0</Version>
+        <PackOnBuild>true</PackOnBuild>
+        <NeutralLanguage>en</NeutralLanguage>
+        <LangVersion>default</LangVersion>
+        <DefineConstants>$(DefineConstants);</DefineConstants>
+        <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <LangVersion>latest</LangVersion>
+        <PackageLicenseUrl>https://github.com/sthewissen/Xamarin.Forms.DebugRainbows/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/sthewissen/Xamarin.Forms.DebugRainbows</PackageProjectUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/sthewissen/Xamarin.Forms.DebugRainbows/master/images/icon.png</PackageIconUrl>
+        <RepositoryUrl>https://github.com/sthewissen/Xamarin.Forms.DebugRainbows</RepositoryUrl>
+        <PackageTags>xamarin, ios, android, xamarin.forms, control, rounded corners, gradient, view</PackageTags>
+        <Title>DebugRainbows for Xamarin.Forms</Title>
+        <Summary>The package you didn't even know you needed! Adds a very colorful debug mode to each of your ContentPages that lets you immediately see where all of your elements are located.</Summary>
+        <Description>The package you didn't even know you needed! Adds a very colorful debug mode to each of your ContentPages that lets you immediately see where all of your elements are located.</Description>
+        <Owners>Steven Thewissen</Owners>
+        <Authors>Steven Thewissen</Authors>
+        <Copyright>Copyright 2019 Steven Thewissen</Copyright>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <!-- Define what happens on build and release -->
+    <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <DebugType>pdbonly</DebugType>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="Platforms\Shared\**\*.cs" />
+        <!--NuGet that bring in good stuff -->
+        <PackageReference Include="Xamarin.Forms" Version="3.6.0.220655" />
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+        <Compile Include="Platforms\iOS\**\*.cs" />
+    </ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+        <Compile Include="Platforms\Android\**\*.cs" />
+    </ItemGroup>
+    <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
