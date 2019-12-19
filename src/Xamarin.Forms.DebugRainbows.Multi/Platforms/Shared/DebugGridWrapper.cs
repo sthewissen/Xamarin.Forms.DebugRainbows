@@ -14,5 +14,6 @@ namespace Xamarin.Forms.DebugRainbows
         public double MinorGridLineOpacity { get; set; }
         public double MajorGridLineWidth { get; set; }
         public double MinorGridLineWidth { get; set; }
+        public bool MakeGridRainbows { get; set; }
     }
 }

@@ -1,10 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage BackgroundColor="#f3f5f6" debug:DebugRainbow.IsDebug="false" debug:DebugGrid.IsDebug="True"
-             debug:DebugGrid.HorizontalSpacing="30" debug:DebugGrid.VerticalSpacing="30"
-             debug:DebugGrid.MajorGridLineColor="Red" debug:DebugGrid.MinorGridLineColor="DarkRed"
-             debug:DebugGrid.MajorGridLineInterval="4" debug:DebugGrid.MajorGridLineOpacity="0.7"
-             debug:DebugGrid.MinorGridLineOpacity="0.3" debug:DebugGrid.MajorGridLineThickness="5"
-             debug:DebugGrid.MinorGridLineThickness="1" debug:DebugGrid.Padding="10"
+<ContentPage BackgroundColor="#f3f5f6" debug:DebugRainbow.ShowGrid="true"
              xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Traveler.MainPage" 
              xmlns:custom="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:effect="clr-namespace:Traveler.Effects"
              xmlns:debug="clr-namespace:Xamarin.Forms.DebugRainbows;assembly=Xamarin.Forms.DebugRainbows">
@@ -96,27 +91,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <!--Alternative implementation-->
-        <!--<ScrollView Orientation="Horizontal">
-            <StackLayout Spacing="0" Orientation="Horizontal" BindableLayout.ItemsSource="{Binding Destinations}" HeightRequest="120">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="10,0">
-                            <custom:PancakeView HeightRequest="120" WidthRequest="200" IsClippedToBounds="true" CornerRadius="12">
-                                <Grid>
-                                    <Image Aspect="AspectFill" Source="{Binding ImageUrl}" />
-                                    <custom:PancakeView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundGradientStartColor="Transparent" BackgroundGradientEndColor="#222" />
-                                    <StackLayout Spacing="0" Margin="12" VerticalOptions="EndAndExpand">
-                                        <Label FontSize="16" FontFamily="{StaticResource LatoBold}" TextColor="#fff" Text="{Binding Title}" />
-                                        <Label FontSize="12" FontFamily="{StaticResource LatoRegular}" TextColor="#ccc" Text="{Binding RatingVotes}" />
-                                    </StackLayout>
-                                </Grid>
-                            </custom:PancakeView>
-                        </Grid>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
-        </ScrollView>-->
         <StackLayout Orientation="Horizontal">
             <Label HorizontalOptions="Start" VerticalOptions="Center" Text="Categories" FontFamily="{StaticResource LatoBold}" FontSize="20" Margin="20,20,20,0" />
             <Label HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#2687ee" Text="SEE ALL" FontSize="12" FontFamily="{StaticResource LatoBold}" Margin="20,20,20,0" />

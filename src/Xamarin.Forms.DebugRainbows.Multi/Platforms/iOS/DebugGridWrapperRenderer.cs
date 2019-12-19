@@ -6,10 +6,10 @@ using UIKit;
 using Xamarin.Forms.DebugRainbows;
 using CoreAnimation;
 
-[assembly: ExportRenderer(typeof(DebugGridWrapper), typeof(DebugGridWrapperRenderer))]
+[assembly: ExportRenderer(typeof(DebugGridWrapper), typeof(DebugGridWrapperRendereriOS))]
 namespace Xamarin.Forms.DebugRainbows
 {
-    public class DebugGridWrapperRenderer : ViewRenderer<DebugGridWrapper, UIView>
+    public class DebugGridWrapperRendereriOS : ViewRenderer<DebugGridWrapper, UIView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<DebugGridWrapper> e)
         {
@@ -19,7 +19,7 @@ namespace Xamarin.Forms.DebugRainbows
             {
                 var grid = e.NewElement as DebugGridWrapper;
 
-                SetNativeControl(new DebugGridView
+                SetNativeControl(new DebugGridViewiOS
                 {
                     HorizontalSpacing = grid.HorizontalSpacing,
                     VerticalSpacing = grid.VerticalSpacing,
@@ -29,16 +29,18 @@ namespace Xamarin.Forms.DebugRainbows
                     MajorGridLineOpacity = grid.MajorGridLineOpacity,
                     MinorGridLineOpacity = grid.MinorGridLineOpacity,
                     MajorGridLineThickness = grid.MajorGridLineWidth,
-                    MinorGridLineThickness = grid.MinorGridLineWidth
+                    MinorGridLineThickness = grid.MinorGridLineWidth,
+                    Padding = grid.Padding,
+                    MakeGridRainbows = grid.MakeGridRainbows
                 });
             }
         }
     }
 
-    public class DebugGridView : UIView
+    public class DebugGridViewiOS : UIView
     {
-        private CAShapeLayer _minorGridLayer;
-        private CAShapeLayer _majorGridLayer;
+        private CALayer _minorGridLayer;
+        private CALayer _majorGridLayer;
 
         public double HorizontalSpacing { get; set; }
         public double VerticalSpacing { get; set; }
@@ -49,37 +51,51 @@ namespace Xamarin.Forms.DebugRainbows
         public double MinorGridLineOpacity { get; set; }
         public double MajorGridLineThickness { get; set; }
         public double MinorGridLineThickness { get; set; }
+        public Thickness Padding { get; set; }
+        public bool MakeGridRainbows { get; set; }
 
         private void DrawGrid()
         {
-            if (_minorGridLayer == null)
+            DrawGridLayer(_minorGridLayer, false);
+            DrawGridLayer(_majorGridLayer, true);
+        }
+
+        private void DrawGridLayer(CALayer layer, bool isMajor)
+        {
+            var path = CreatePath(isMajor ? MajorGridLineInterval : 0);
+
+            layer = new CAShapeLayer
             {
-                var minorPath = CreatePath();
+                LineWidth = isMajor ? (nfloat)MajorGridLineThickness : (nfloat)MinorGridLineThickness,
+                Path = path.CGPath,
+                StrokeColor = isMajor ? MajorGridLineColor.ToCGColor() : MinorGridLineColor.ToCGColor(),
+                Opacity = isMajor ? (float)MajorGridLineOpacity : (float)MinorGridLineOpacity,
+                Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height)
+            };
 
-                _minorGridLayer = new CAShapeLayer
-                {
-                    LineWidth = (nfloat)MinorGridLineThickness,
-                    Path = minorPath.CGPath,
-                    StrokeColor = MinorGridLineColor.ToCGColor(),
-                    Opacity = (float)MinorGridLineOpacity
-                };
-
-                this.Layer.AddSublayer(_minorGridLayer);
+            if (!MakeGridRainbows)
+            {
+                this.Layer.AddSublayer(layer);
             }
-
-            if (_majorGridLayer == null)
+            else
             {
-                var majorPath = CreatePath(MajorGridLineInterval);
+                var gradientLayer = new CAGradientLayer();
+                gradientLayer.StartPoint = new CGPoint(0.5, 0.0);
+                gradientLayer.EndPoint = new CGPoint(0.5, 1.0);
+                gradientLayer.Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height);
 
-                _majorGridLayer = new CAShapeLayer
-                {
-                    LineWidth = (nfloat)MajorGridLineThickness,
-                    Path = majorPath.CGPath,
-                    StrokeColor = MajorGridLineColor.ToCGColor(),
-                    Opacity = (float)MajorGridLineOpacity
-                };
+                gradientLayer.Colors = new CGColor[] {
+                        Color.FromHex("#f3855b").ToCGColor(),
+                        Color.FromHex("#fbcf93").ToCGColor(),
+                        Color.FromHex("#fbe960").ToCGColor(),
+                        Color.FromHex("#a0e67a").ToCGColor(),
+                        Color.FromHex("#33c6ee").ToCGColor(),
+                        Color.FromHex("#c652ba").ToCGColor(),
+                        Color.FromHex("#ef53b2").ToCGColor()
+                    };
 
-                this.Layer.AddSublayer(_majorGridLayer);
+                gradientLayer.Mask = layer;
+                this.Layer.AddSublayer(gradientLayer);
             }
         }
 
@@ -118,20 +134,37 @@ namespace Xamarin.Forms.DebugRainbows
 
         private void RemoveGrid()
         {
-            if (_minorGridLayer != null)
-            {
-                _minorGridLayer.RemoveFromSuperLayer();
-            }
-
-            if (_majorGridLayer != null)
-            {
-                _majorGridLayer.RemoveFromSuperLayer();
-            }
+            _minorGridLayer?.RemoveFromSuperLayer();
+            _majorGridLayer?.RemoveFromSuperLayer();
         }
 
         public override void Draw(CGRect rect)
         {
             DrawGrid();
+        }
+    }
+
+    public class InvertedShapeLayer : CALayer
+    {
+        public CGPath Path { get; set; }
+        public CGColor FillColor { get; set; }
+        public CGColor StrokeColor { get; set; }
+        public nfloat LineWidth { get; set; } = 1.0f;
+
+        public override void DrawInContext(CGContext ctx)
+        {
+            base.DrawInContext(ctx);
+
+            ctx.SetFillColor(gray: 0.0f, alpha: 1.0f);
+            ctx.FillRect(this.Bounds);
+            ctx.SetBlendMode(CGBlendMode.SourceIn);
+
+            ctx.SetStrokeColor(StrokeColor);
+            ctx.SetFillColor(FillColor);
+            ctx.SetLineWidth(LineWidth);
+            ctx.AddPath(Path);
+
+            ctx.DrawPath(CGPathDrawingMode.FillStroke);
         }
     }
 }
