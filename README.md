@@ -13,7 +13,7 @@ Have you ever had a piece of XAML code that didn't produce the layout you expect
 
 ## API Reference
 
-| Property | What it does | Extra info |
+| Property | What it does |
 | ------ | ------ | ------ |
 | `GridLineColor` | Defines a color for the grid lines or blocks (depending on `Inverse`). | |
 | `GridLineOpacity` | The opacity of the grid lines in the overlay. | |
