@@ -21,17 +21,18 @@ namespace Xamarin.Forms.DebugRainbows
 
                 SetNativeControl(new DebugGridViewiOS
                 {
-                    HorizontalSpacing = grid.HorizontalSpacing,
-                    VerticalSpacing = grid.VerticalSpacing,
+                    HorizontalItemSize = grid.HorizontalItemSize,
+                    VerticalItemSize = grid.VerticalItemSize,
                     MajorGridLineInterval = grid.MajorGridLineInterval,
                     MajorGridLineColor = grid.MajorGridLineColor,
-                    MinorGridLineColor = grid.MinorGridLineColor,
+                    GridLineColor = grid.GridLineColor,
                     MajorGridLineOpacity = grid.MajorGridLineOpacity,
-                    MinorGridLineOpacity = grid.MinorGridLineOpacity,
+                    GridLineOpacity = grid.GridLineOpacity,
                     MajorGridLineThickness = grid.MajorGridLineWidth,
-                    MinorGridLineThickness = grid.MinorGridLineWidth,
+                    GridLineThickness = grid.GridLineWidth,
                     Padding = grid.Padding,
-                    MakeGridRainbows = grid.MakeGridRainbows
+                    MakeGridRainbows = grid.MakeGridRainbows,
+                    Inverse = grid.Inverse
                 });
             }
         }
@@ -39,52 +40,10 @@ namespace Xamarin.Forms.DebugRainbows
 
     public class DebugGridViewiOS : UIView
     {
-        private CALayer _minorGridLayer;
+        private CALayer _gridLayer;
         private CALayer _majorGridLayer;
 
-        public double HorizontalSpacing { get; set; }
-        public double VerticalSpacing { get; set; }
-        public int MajorGridLineInterval { get; set; }
-        public Color MajorGridLineColor { get; set; }
-        public Color MinorGridLineColor { get; set; }
-        public double MajorGridLineOpacity { get; set; }
-        public double MinorGridLineOpacity { get; set; }
-        public double MajorGridLineThickness { get; set; }
-        public double MinorGridLineThickness { get; set; }
-        public Thickness Padding { get; set; }
-        public bool MakeGridRainbows { get; set; }
-
-        private void DrawGrid()
-        {
-            DrawGridLayer(_minorGridLayer, false);
-            DrawGridLayer(_majorGridLayer, true);
-        }
-
-        private void DrawGridLayer(CALayer layer, bool isMajor)
-        {
-            var path = CreatePath(isMajor ? MajorGridLineInterval : 0);
-
-            layer = new CAShapeLayer
-            {
-                LineWidth = isMajor ? (nfloat)MajorGridLineThickness : (nfloat)MinorGridLineThickness,
-                Path = path.CGPath,
-                StrokeColor = isMajor ? MajorGridLineColor.ToCGColor() : MinorGridLineColor.ToCGColor(),
-                Opacity = isMajor ? (float)MajorGridLineOpacity : (float)MinorGridLineOpacity,
-                Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height)
-            };
-
-            if (!MakeGridRainbows)
-            {
-                this.Layer.AddSublayer(layer);
-            }
-            else
-            {
-                var gradientLayer = new CAGradientLayer();
-                gradientLayer.StartPoint = new CGPoint(0.5, 0.0);
-                gradientLayer.EndPoint = new CGPoint(0.5, 1.0);
-                gradientLayer.Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height);
-
-                gradientLayer.Colors = new CGColor[] {
+        private CGColor[] rainbowColors = {
                         Color.FromHex("#f3855b").ToCGColor(),
                         Color.FromHex("#fbcf93").ToCGColor(),
                         Color.FromHex("#fbe960").ToCGColor(),
@@ -94,7 +53,103 @@ namespace Xamarin.Forms.DebugRainbows
                         Color.FromHex("#ef53b2").ToCGColor()
                     };
 
-                gradientLayer.Mask = layer;
+        public double HorizontalItemSize { get; set; }
+        public double VerticalItemSize { get; set; }
+        public int MajorGridLineInterval { get; set; }
+        public Color MajorGridLineColor { get; set; }
+        public Color GridLineColor { get; set; }
+        public double MajorGridLineOpacity { get; set; }
+        public double GridLineOpacity { get; set; }
+        public double MajorGridLineThickness { get; set; }
+        public double GridLineThickness { get; set; }
+        public Thickness Padding { get; set; }
+        public bool MakeGridRainbows { get; set; }
+        public bool Inverse { get; set; }
+
+        public DebugGridViewiOS()
+        {
+            BackgroundColor = UIColor.Clear;
+        }
+
+        private void DrawGrid(CGRect rect)
+        {
+            if (Inverse)
+            {
+                DrawInverseGridLayer(rect);
+            }
+            else
+            {
+                DrawNormalGridLayer(_gridLayer, false);
+                DrawNormalGridLayer(_majorGridLayer, true);
+            }
+        }
+
+        private void DrawInverseGridLayer(CGRect rect)
+        {
+            var horizontalTotal = 0;
+            var context = UIGraphics.GetCurrentContext();
+
+            for (int i = 1; horizontalTotal < Bounds.Size.Width; i++)
+            {
+                var verticalTotal = 0;
+                var horizontalSpacerSize = MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
+
+                for (int j = 1; verticalTotal < Bounds.Size.Height; j++)
+                {
+                    var verticalSpacerSize = MajorGridLineInterval > 0 && j % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
+                    var rectangle = new CGRect(horizontalTotal, verticalTotal, HorizontalItemSize, VerticalItemSize);
+
+                    if (MakeGridRainbows)
+                    {
+                        var color = rainbowColors[(i + j) % rainbowColors.Length];
+                        context.SetFillColor(color);
+                        context.SetAlpha((nfloat)GridLineOpacity);
+                    }
+                    else
+                    {
+                        context.SetFillColor(GridLineColor.ToCGColor());
+                        context.SetAlpha((nfloat)GridLineOpacity);
+                    }
+
+                    context.FillRect(rectangle);
+
+                    verticalTotal += (int)(VerticalItemSize + verticalSpacerSize);
+                }
+
+                horizontalTotal += (int)(HorizontalItemSize + horizontalSpacerSize);
+            }
+        }
+
+        private void DrawNormalGridLayer(CALayer layer, bool isMajor)
+        {
+            if (isMajor && MajorGridLineInterval == 0)
+                return;
+
+            using var path = CreatePath(isMajor ? MajorGridLineInterval : 0);
+
+            layer = new CAShapeLayer
+            {
+                LineWidth = isMajor ? (nfloat)MajorGridLineThickness : (nfloat)GridLineThickness,
+                Path = path.CGPath,
+                StrokeColor = isMajor ? MajorGridLineColor.ToCGColor() : GridLineColor.ToCGColor(),
+                Opacity = isMajor ? (float)MajorGridLineOpacity : (float)GridLineOpacity,
+                Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height)
+            };
+
+            if (!MakeGridRainbows)
+            {
+                this.Layer.AddSublayer(layer);
+            }
+            else
+            {
+                var gradientLayer = new CAGradientLayer
+                {
+                    StartPoint = new CGPoint(0.5, 0.0),
+                    EndPoint = new CGPoint(0.5, 1.0),
+                    Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height),
+                    Colors = rainbowColors,
+                    Mask = layer
+                };
                 this.Layer.AddSublayer(gradientLayer);
             }
         }
@@ -102,15 +157,15 @@ namespace Xamarin.Forms.DebugRainbows
         private UIBezierPath CreatePath(int interval = 0)
         {
             var path = new UIBezierPath();
-            var gridLinesHorizontal = Bounds.Width / HorizontalSpacing;
-            var gridLinesVertical = Bounds.Height / VerticalSpacing;
+            var gridLinesHorizontal = Bounds.Width / HorizontalItemSize;
+            var gridLinesVertical = Bounds.Height / VerticalItemSize;
 
             for (int i = 0; i < gridLinesHorizontal; i++)
             {
                 if (interval == 0 || i % interval == 0)
                 {
-                    var start = new CGPoint(x: (nfloat)i * HorizontalSpacing, y: 0);
-                    var end = new CGPoint(x: (nfloat)i * HorizontalSpacing, y: Bounds.Height);
+                    var start = new CGPoint(x: (nfloat)i * HorizontalItemSize, y: 0);
+                    var end = new CGPoint(x: (nfloat)i * HorizontalItemSize, y: Bounds.Height);
                     path.MoveTo(start);
                     path.AddLineTo(end);
                 }
@@ -120,8 +175,8 @@ namespace Xamarin.Forms.DebugRainbows
             {
                 if (interval == 0 || i % interval == 0)
                 {
-                    var start = new CGPoint(x: 0, y: (nfloat)i * VerticalSpacing);
-                    var end = new CGPoint(x: Bounds.Width, y: (nfloat)i * VerticalSpacing);
+                    var start = new CGPoint(x: 0, y: (nfloat)i * VerticalItemSize);
+                    var end = new CGPoint(x: Bounds.Width, y: (nfloat)i * VerticalItemSize);
                     path.MoveTo(start);
                     path.AddLineTo(end);
                 }
@@ -134,37 +189,13 @@ namespace Xamarin.Forms.DebugRainbows
 
         private void RemoveGrid()
         {
-            _minorGridLayer?.RemoveFromSuperLayer();
+            _gridLayer?.RemoveFromSuperLayer();
             _majorGridLayer?.RemoveFromSuperLayer();
         }
 
         public override void Draw(CGRect rect)
         {
-            DrawGrid();
-        }
-    }
-
-    public class InvertedShapeLayer : CALayer
-    {
-        public CGPath Path { get; set; }
-        public CGColor FillColor { get; set; }
-        public CGColor StrokeColor { get; set; }
-        public nfloat LineWidth { get; set; } = 1.0f;
-
-        public override void DrawInContext(CGContext ctx)
-        {
-            base.DrawInContext(ctx);
-
-            ctx.SetFillColor(gray: 0.0f, alpha: 1.0f);
-            ctx.FillRect(this.Bounds);
-            ctx.SetBlendMode(CGBlendMode.SourceIn);
-
-            ctx.SetStrokeColor(StrokeColor);
-            ctx.SetFillColor(FillColor);
-            ctx.SetLineWidth(LineWidth);
-            ctx.AddPath(Path);
-
-            ctx.DrawPath(CGPathDrawingMode.FillStroke);
+            DrawGrid(rect);
         }
     }
 }

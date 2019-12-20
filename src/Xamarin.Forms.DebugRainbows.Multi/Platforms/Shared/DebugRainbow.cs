@@ -24,21 +24,22 @@ namespace Xamarin.Forms.DebugRainbows
         #endregion
 
         public static readonly BindableProperty ShowColorsProperty = BindableProperty.CreateAttached("ShowColors", typeof(bool), typeof(VisualElement), default(bool), propertyChanged: (b, o, n) => OnShowDebugModeChanged(b, (bool)o, (bool)n));
-        public static readonly BindableProperty HorizontalSpacingProperty = BindableProperty.CreateAttached("HorizontalSpacing", typeof(double), typeof(Page), 10.0);
-        public static readonly BindableProperty VerticalSpacingProperty = BindableProperty.CreateAttached("VerticalSpacing", typeof(double), typeof(Page), 10.0);
+        public static readonly BindableProperty HorizontalItemSizeProperty = BindableProperty.CreateAttached("HorizontalItemSize", typeof(double), typeof(Page), 10.0);
+        public static readonly BindableProperty VerticalItemSizeProperty = BindableProperty.CreateAttached("VerticalItemSize", typeof(double), typeof(Page), 10.0);
 
-        public static readonly BindableProperty MajorGridLineIntervalProperty = BindableProperty.CreateAttached("MajorGridLineInterval", typeof(int), typeof(Page), 4);
+        public static readonly BindableProperty MajorGridLineIntervalProperty = BindableProperty.CreateAttached("MajorGridLineInterval", typeof(int), typeof(Page), 0);
         public static readonly BindableProperty MajorGridLineColorProperty = BindableProperty.CreateAttached("MajorGridLineColor", typeof(Color), typeof(Page), Color.Red);
-        public static readonly BindableProperty MinorGridLineColorProperty = BindableProperty.CreateAttached("MinorGridLineColor", typeof(Color), typeof(Page), Color.Red);
         public static readonly BindableProperty MajorGridLineOpacityProperty = BindableProperty.CreateAttached("MajorGridLineOpacity", typeof(double), typeof(Page), 1.0);
-        public static readonly BindableProperty MinorGridLineOpacityProperty = BindableProperty.CreateAttached("MinorGridLineOpacity", typeof(double), typeof(Page), 1.0);
         public static readonly BindableProperty MajorGridLineWidthProperty = BindableProperty.CreateAttached("MajorGridLineWidth", typeof(double), typeof(Page), 3.0);
-        public static readonly BindableProperty MinorGridLineWidthProperty = BindableProperty.CreateAttached("MinorGridLineWidth", typeof(double), typeof(Page), 1.0);
 
+        public static readonly BindableProperty GridLineColorProperty = BindableProperty.CreateAttached("GridLineColor", typeof(Color), typeof(Page), Color.Red);
+        public static readonly BindableProperty GridLineOpacityProperty = BindableProperty.CreateAttached("GridLineOpacity", typeof(double), typeof(Page), 1.0);
+        public static readonly BindableProperty GridLineWidthProperty = BindableProperty.CreateAttached("GridLineWidth", typeof(double), typeof(Page), 1.0);
         public static readonly BindableProperty GridPaddingProperty = BindableProperty.CreateAttached("GridPadding", typeof(Thickness), typeof(Page), default(Thickness));
 
         public static readonly BindableProperty ShowGridProperty = BindableProperty.CreateAttached("ShowGrid", typeof(bool), typeof(Page), default(bool), propertyChanged: (b, o, n) => OnShowDebugModeChanged(b, (bool)o, (bool)n));
         public static readonly BindableProperty MakeGridRainbowsProperty = BindableProperty.CreateAttached("MakeGridRainbows", typeof(bool), typeof(Page), default(bool));
+        public static readonly BindableProperty InverseProperty = BindableProperty.CreateAttached("Inverse", typeof(bool), typeof(Page), default(bool));
 
         public static void SetShowColors(BindableObject b, bool value)
         {
@@ -80,24 +81,24 @@ namespace Xamarin.Forms.DebugRainbows
             return (Color)b.GetValue(MajorGridLineColorProperty);
         }
 
-        public static void SetMinorGridLineColor(BindableObject b, Color value)
+        public static void SetGridLineColor(BindableObject b, Color value)
         {
-            b.SetValue(MinorGridLineColorProperty, value);
+            b.SetValue(GridLineColorProperty, value);
         }
 
-        public static Color GetMinorGridLineColor(BindableObject b)
+        public static Color GetGridLineColor(BindableObject b)
         {
-            return (Color)b.GetValue(MinorGridLineColorProperty);
+            return (Color)b.GetValue(GridLineColorProperty);
         }
 
-        public static void SetMinorGridLineWidth(BindableObject b, Color value)
+        public static void SetGridLineWidth(BindableObject b, Color value)
         {
-            b.SetValue(MinorGridLineWidthProperty, value);
+            b.SetValue(GridLineWidthProperty, value);
         }
 
-        public static double GetMinorGridLineWidth(BindableObject b)
+        public static double GetGridLineWidth(BindableObject b)
         {
-            return (double)b.GetValue(MinorGridLineWidthProperty);
+            return (double)b.GetValue(GridLineWidthProperty);
         }
 
         public static void SetMajorGridLineWidth(BindableObject b, double value)
@@ -110,14 +111,14 @@ namespace Xamarin.Forms.DebugRainbows
             return (double)b.GetValue(MajorGridLineWidthProperty);
         }
 
-        public static void SetMinorGridLineOpacity(BindableObject b, Color value)
+        public static void SetGridLineOpacity(BindableObject b, Color value)
         {
-            b.SetValue(MinorGridLineOpacityProperty, value);
+            b.SetValue(GridLineOpacityProperty, value);
         }
 
-        public static double GetMinorGridLineOpacity(BindableObject b)
+        public static double GetGridLineOpacity(BindableObject b)
         {
-            return (double)b.GetValue(MinorGridLineOpacityProperty);
+            return (double)b.GetValue(GridLineOpacityProperty);
         }
 
         public static void SetMajorGridLineOpacity(BindableObject b, double value)
@@ -130,24 +131,24 @@ namespace Xamarin.Forms.DebugRainbows
             return (double)b.GetValue(MajorGridLineOpacityProperty);
         }
 
-        public static void SetHorizontalSpacing(BindableObject b, double value)
+        public static void SetHorizontalItemSize(BindableObject b, double value)
         {
-            b.SetValue(HorizontalSpacingProperty, value);
+            b.SetValue(HorizontalItemSizeProperty, value);
         }
 
-        public static double GetHorizontalSpacing(BindableObject b)
+        public static double GetHorizontalItemSize(BindableObject b)
         {
-            return (double)b.GetValue(HorizontalSpacingProperty);
+            return (double)b.GetValue(HorizontalItemSizeProperty);
         }
 
-        public static void SetVerticalSpacing(BindableObject b, double value)
+        public static void SetVerticalItemSize(BindableObject b, double value)
         {
-            b.SetValue(VerticalSpacingProperty, value);
+            b.SetValue(VerticalItemSizeProperty, value);
         }
 
-        public static double GetVerticalSpacing(BindableObject b)
+        public static double GetVerticalItemSize(BindableObject b)
         {
-            return (double)b.GetValue(VerticalSpacingProperty);
+            return (double)b.GetValue(VerticalItemSizeProperty);
         }
 
         public static void SetMakeGridRainbows(BindableObject b, bool value)
@@ -158,6 +159,16 @@ namespace Xamarin.Forms.DebugRainbows
         public static bool GetMakeGridRainbows(BindableObject b)
         {
             return (bool)b.GetValue(MakeGridRainbowsProperty);
+        }
+
+        public static void SetInverse(BindableObject b, bool value)
+        {
+            b.SetValue(InverseProperty, value);
+        }
+
+        public static bool GetInverse(BindableObject b)
+        {
+            return (bool)b.GetValue(InverseProperty);
         }
 
         public static void SetShowGrid(BindableObject b, bool value)
@@ -250,17 +261,18 @@ namespace Xamarin.Forms.DebugRainbows
             var gridContent = new DebugGridWrapper
             {
                 InputTransparent = true,
-                HorizontalSpacing = GetHorizontalSpacing(page),
-                VerticalSpacing = GetVerticalSpacing(page),
+                HorizontalItemSize = GetHorizontalItemSize(page),
+                VerticalItemSize = GetVerticalItemSize(page),
                 MajorGridLineColor = GetMajorGridLineColor(page),
-                MinorGridLineColor = GetMinorGridLineColor(page),
+                GridLineColor = GetGridLineColor(page),
                 MajorGridLineOpacity = GetMajorGridLineOpacity(page),
-                MinorGridLineOpacity = GetMinorGridLineOpacity(page),
+                GridLineOpacity = GetGridLineOpacity(page),
                 MajorGridLineInterval = GetMajorGridLineInterval(page),
                 MajorGridLineWidth = GetMajorGridLineWidth(page),
-                MinorGridLineWidth = GetMinorGridLineWidth(page),
+                GridLineWidth = GetGridLineWidth(page),
                 Margin = GetGridPadding(page),
                 MakeGridRainbows = GetMakeGridRainbows(page),
+                Inverse = GetInverse(page)
             };
 
             Grid newContent = new Grid();

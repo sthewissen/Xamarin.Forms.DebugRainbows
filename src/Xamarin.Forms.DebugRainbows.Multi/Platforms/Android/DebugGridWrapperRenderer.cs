@@ -28,15 +28,15 @@ namespace Xamarin.Forms.DebugRainbows
 
                 SetNativeControl(new DebugGridViewDroid(Context)
                 {
-                    HorizontalSpacing = grid.HorizontalSpacing,
-                    VerticalSpacing = grid.VerticalSpacing,
+                    HorizontalItemSize = grid.HorizontalItemSize,
+                    VerticalItemSize = grid.VerticalItemSize,
                     MajorGridLineInterval = grid.MajorGridLineInterval,
                     MajorGridLineColor = grid.MajorGridLineColor,
-                    MinorGridLineColor = grid.MinorGridLineColor,
+                    GridLineColor = grid.GridLineColor,
                     MajorGridLineOpacity = grid.MajorGridLineOpacity,
-                    MinorGridLineOpacity = grid.MinorGridLineOpacity,
+                    GridLineOpacity = grid.GridLineOpacity,
                     MajorGridLineThickness = grid.MajorGridLineWidth,
-                    MinorGridLineThickness = grid.MinorGridLineWidth,
+                    GridLineThickness = grid.GridLineWidth,
                     Padding = grid.Padding,
                     MakeGridRainbows = grid.MakeGridRainbows
                 });
@@ -49,15 +49,15 @@ namespace Xamarin.Forms.DebugRainbows
         private int screenWidth;
         private int screenHeight;
 
-        public double HorizontalSpacing { get; set; }
-        public double VerticalSpacing { get; set; }
+        public double HorizontalItemSize { get; set; }
+        public double VerticalItemSize { get; set; }
         public int MajorGridLineInterval { get; set; }
         public Color MajorGridLineColor { get; set; }
-        public Color MinorGridLineColor { get; set; }
+        public Color GridLineColor { get; set; }
         public double MajorGridLineOpacity { get; set; }
-        public double MinorGridLineOpacity { get; set; }
+        public double GridLineOpacity { get; set; }
         public double MajorGridLineThickness { get; set; }
-        public double MinorGridLineThickness { get; set; }
+        public double GridLineThickness { get; set; }
         public Thickness Padding { get; set; }
         public bool MakeGridRainbows { get; set; }
 
@@ -101,11 +101,11 @@ namespace Xamarin.Forms.DebugRainbows
                 Alpha = (int)(255 * MajorGridLineOpacity)
             };
 
-            var minorPaint = new Paint
+            var Paint = new Paint
             {
-                StrokeWidth = ConvertDpToPixel((float)MinorGridLineThickness, Context),
-                Color = MinorGridLineColor.ToAndroid(),
-                Alpha = (int)(255 * MinorGridLineOpacity)
+                StrokeWidth = ConvertDpToPixel((float)GridLineThickness, Context),
+                Color = GridLineColor.ToAndroid(),
+                Alpha = (int)(255 * GridLineOpacity)
             };
 
             if (MakeGridRainbows)
@@ -127,7 +127,7 @@ namespace Xamarin.Forms.DebugRainbows
                 var locations = new float[] { 0, 0.2f, 0.4f, 0.6f, 0.8f, 1 };
 
                 var shader = new LinearGradient(canvas.Width - (float)a, (float)b, canvas.Width - (float)c, (float)d, colors, locations, Shader.TileMode.Clamp);
-                minorPaint.SetShader(shader);
+                Paint.SetShader(shader);
                 majorPaint.SetShader(shader);
             }
 
@@ -135,8 +135,8 @@ namespace Xamarin.Forms.DebugRainbows
             int i = 0;
             while (verticalPosition <= screenHeight)
             {
-                canvas.DrawLine(0, verticalPosition, screenWidth, verticalPosition, i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
-                verticalPosition += ConvertDpToPixel((float)VerticalSpacing, Context);
+                canvas.DrawLine(0, verticalPosition, screenWidth, verticalPosition, i % MajorGridLineInterval == 0 ? majorPaint : Paint);
+                verticalPosition += ConvertDpToPixel((float)VerticalItemSize, Context);
                 i++;
             }
 
@@ -144,8 +144,8 @@ namespace Xamarin.Forms.DebugRainbows
             i = 0;
             while (horizontalPosition <= screenWidth)
             {
-                canvas.DrawLine(horizontalPosition, 0, horizontalPosition, screenHeight, i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
-                horizontalPosition += ConvertDpToPixel((float)HorizontalSpacing, Context);
+                canvas.DrawLine(horizontalPosition, 0, horizontalPosition, screenHeight, i % MajorGridLineInterval == 0 ? majorPaint : Paint);
+                horizontalPosition += ConvertDpToPixel((float)HorizontalItemSize, Context);
                 i++;
             }
         }
