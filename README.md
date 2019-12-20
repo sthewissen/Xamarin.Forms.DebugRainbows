@@ -14,21 +14,21 @@ Have you ever had a piece of XAML code that didn't produce the layout you expect
 ## API Reference
 
 | Property | What it does |
-| ------ | ------ | ------ |
-| `GridLineColor` | Defines a color for the grid lines or blocks (depending on `Inverse`). | |
-| `GridLineOpacity` | The opacity of the grid lines in the overlay. | |
-| `GridLineWidth` | The width of the grid lines or between each block (depending on `Inverse`). | |
-| `GridPadding` | Pads the entire overlay. Takes a `Thickness` object. | |
-| `HorizontalSpacing` | Width between grid lines or the width of the blocks (depending on `Inverse`). | |
-| `Inverse` | Either draws grid lines (`false`) or block view (`true`). | |
-| `MajorGridLineColor` | When using major grid lines you can color them differently. | |
-| `MajorGridLineInterval` | Defines the interval of when a major grid line should be drawn. | |
-| `MajorGridLineOpacity` | The opacity of the major grid lines in the overlay. | |
-| `MajorGridLineWidth` | The width of the major grid lines or space between block (depending on `Inverse`).  | |
-| `MakeGridRainbows` | Throws some instant joy into your overlays. | |
-| `ShowColors` | Automatically gives every visual element a random background color. |  |
-| `ShowGrid` | Draws a customizable grid overlay used to help you align elements. |  |
-| `VerticalItemSize` | Height between grid lines or the height of the blocks (depending on `Inverse`). |  |
+| ------ | ------ |
+| `GridLineColor` | Defines a color for the grid lines or blocks (depending on `Inverse`). |
+| `GridLineOpacity` | The opacity of the grid lines in the overlay. | 
+| `GridLineWidth` | The width of the grid lines or between each block (depending on `Inverse`). | 
+| `GridPadding` | Pads the entire overlay. Takes a `Thickness` object. | 
+| `HorizontalSpacing` | Width between grid lines or the width of the blocks (depending on `Inverse`). |
+| `Inverse` | Either draws grid lines (`false`) or block view (`true`). | 
+| `MajorGridLineColor` | When using major grid lines you can color them differently. | 
+| `MajorGridLineInterval` | Defines the interval of when a major grid line should be drawn. | 
+| `MajorGridLineOpacity` | The opacity of the major grid lines in the overlay. | 
+| `MajorGridLineWidth` | The width of the major grid lines or space between block (depending on `Inverse`).  | 
+| `MakeGridRainbows` | Throws some instant joy into your overlays. | 
+| `ShowColors` | Automatically gives every visual element a random background color. |  
+| `ShowGrid` | Draws a customizable grid overlay used to help you align elements. |  
+| `VerticalItemSize` | Height between grid lines or the height of the blocks (depending on `Inverse`). | 
 
 ## How to use it?
 
