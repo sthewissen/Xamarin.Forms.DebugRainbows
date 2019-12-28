@@ -130,32 +130,33 @@ namespace Xamarin.Forms.DebugRainbows
             if (isMajor && MajorGridLineInterval == 0)
                 return;
 
-            using var path = CreatePath(isMajor ? MajorGridLineInterval : 0);
-
-            layer = new CAShapeLayer
+            using (var path = CreatePath(isMajor ? MajorGridLineInterval : 0))
             {
-                LineWidth = isMajor ? (nfloat)MajorGridLineThickness : (nfloat)GridLineThickness,
-                Path = path.CGPath,
-                StrokeColor = isMajor ? MajorGridLineColor.ToCGColor() : GridLineColor.ToCGColor(),
-                Opacity = isMajor ? (float)MajorGridLineOpacity : (float)GridLineOpacity,
-                Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height)
-            };
-
-            if (!MakeGridRainbows)
-            {
-                this.Layer.AddSublayer(layer);
-            }
-            else
-            {
-                var gradientLayer = new CAGradientLayer
+                layer = new CAShapeLayer
                 {
-                    StartPoint = new CGPoint(0.5, 0.0),
-                    EndPoint = new CGPoint(0.5, 1.0),
-                    Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height),
-                    Colors = rainbowColors,
-                    Mask = layer
+                    LineWidth = isMajor ? (nfloat)MajorGridLineThickness : (nfloat)GridLineThickness,
+                    Path = path.CGPath,
+                    StrokeColor = isMajor ? MajorGridLineColor.ToCGColor() : GridLineColor.ToCGColor(),
+                    Opacity = isMajor ? (float)MajorGridLineOpacity : (float)GridLineOpacity,
+                    Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height)
                 };
-                this.Layer.AddSublayer(gradientLayer);
+
+                if (!MakeGridRainbows)
+                {
+                    this.Layer.AddSublayer(layer);
+                }
+                else
+                {
+                    var gradientLayer = new CAGradientLayer
+                    {
+                        StartPoint = new CGPoint(0.5, 0.0),
+                        EndPoint = new CGPoint(0.5, 1.0),
+                        Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height),
+                        Colors = rainbowColors,
+                        Mask = layer
+                    };
+                    this.Layer.AddSublayer(gradientLayer);
+                }
             }
         }
 
