@@ -24,16 +24,18 @@
         </OnPlatform>
 
         <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
-            <Setter Property="debug:DebugRainbow.HorizontalItemSize" Value="24" />
-            <Setter Property="debug:DebugRainbow.VerticalItemSize" Value="24" />
+            <Setter Property="debug:DebugRainbow.ShowColors" Value="false"/>
+            <Setter Property="debug:DebugRainbow.ShowGrid" Value="true" />
+            <Setter Property="debug:DebugRainbow.HorizontalItemSize" Value="15" />
+            <Setter Property="debug:DebugRainbow.VerticalItemSize" Value="15" />
             <Setter Property="debug:DebugRainbow.MajorGridLineColor" Value="Red" />
-            <Setter Property="debug:DebugRainbow.MajorGridLineInterval" Value="0" />
+            <Setter Property="debug:DebugRainbow.MajorGridLineInterval" Value="5" />
             <Setter Property="debug:DebugRainbow.MajorGridLineOpacity" Value="1" />
-            <Setter Property="debug:DebugRainbow.MajorGridLineWidth" Value="12" />
+            <Setter Property="debug:DebugRainbow.MajorGridLineWidth" Value="5" />
             <Setter Property="debug:DebugRainbow.GridLineColor" Value="Red" />
             <Setter Property="debug:DebugRainbow.GridLineOpacity" Value="0.5" />
-            <Setter Property="debug:DebugRainbow.GridLineWidth" Value="12" />
-            <Setter Property="debug:DebugRainbow.GridPadding" Value="20,40,0,0" />
+            <Setter Property="debug:DebugRainbow.GridLineWidth" Value="3" />
+            <Setter Property="debug:DebugRainbow.GridPadding" Value="20,30,0,0" />
             <Setter Property="debug:DebugRainbow.MakeGridRainbows" Value="true" />
             <Setter Property="debug:DebugRainbow.Inverse" Value="true" />
         </Style>

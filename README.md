@@ -36,7 +36,7 @@ The project is up on NuGet at the following URL:
 
 https://www.nuget.org/packages/Xamarin.Forms.DebugRainbows
 
-Install this package into your shared project. There is no need to install it in your platform specific projects. After that you're good to go! Simply add the namespace declaration and set the `ShowColors` or `ShowGrid` attached property to `true`!
+Install this package into your shared project and your platform specific projects. After that you're good to go! Simply add the namespace declaration and set the `ShowColors` or `ShowGrid` attached property to `true`!
 
 ### XAML UI
 

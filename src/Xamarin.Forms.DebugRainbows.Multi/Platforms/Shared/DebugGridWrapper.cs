@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.DebugRainbows
 {
-    public class DebugGridWrapper : Grid
+    public class DebugGridWrapper : ContentView
     {
         public double HorizontalItemSize { get; set; }
         public double VerticalItemSize { get; set; }
@@ -16,5 +16,10 @@ namespace Xamarin.Forms.DebugRainbows
         public double GridLineWidth { get; set; }
         public bool Inverse { get; set; }
         public bool MakeGridRainbows { get; set; }
+
+        public DebugGridWrapper()
+        {
+            InputTransparent = true;
+        }
     }
 }

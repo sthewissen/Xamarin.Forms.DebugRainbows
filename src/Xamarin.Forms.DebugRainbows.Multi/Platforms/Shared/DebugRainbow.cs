@@ -196,6 +196,14 @@ namespace Xamarin.Forms.DebugRainbows
                     page.Appearing += Page_Appearing;
                 else
                     page.Appearing -= Page_Appearing;
+
+                // Size Changed gets called in time to size the actual initial grid.
+                // However, it doesn't get called when using Hot Reload, so we also hook up Appearing.
+                // Inside of the handler we check whether or not the Grid overlay has already been added.
+                if (showGrid)
+                    page.SizeChanged += Page_SizeChanged;
+                else
+                    page.SizeChanged -= Page_SizeChanged;
             }
             else if (bindable.GetType().IsSubclassOf(typeof(View)))
             {
@@ -203,6 +211,16 @@ namespace Xamarin.Forms.DebugRainbows
                     (bindable as View).SizeChanged += View_SizeChanged;
                 else
                     (bindable as View).SizeChanged -= View_SizeChanged;
+            }
+#endif
+        }
+
+        private static void Page_SizeChanged(object sender, EventArgs e)
+        {
+#if DEBUG
+            if (sender.GetType().IsSubclassOf(typeof(ContentPage)))
+            {
+                BuildGrid(sender as ContentPage);
             }
 #endif
         }
@@ -240,13 +258,9 @@ namespace Xamarin.Forms.DebugRainbows
                     if (item is ContentPage)
                     {
                         var showColors = GetShowColors(sender as Page);
-                        var showGrid = GetShowGrid(sender as Page);
 
                         if (showColors)
                             IterateChildren(((ContentPage)item).Content);
-
-                        if (showGrid)
-                            BuildGrid((ContentPage)item);
                     }
                 }
             }
@@ -255,31 +269,42 @@ namespace Xamarin.Forms.DebugRainbows
 
         private static void BuildGrid(ContentPage page)
         {
-            View pageContent = page.Content;
-            page.Content = null;
-
-            var gridContent = new DebugGridWrapper
+            // Check for the class ID to only add the grid once.
+            if (page.Content.ClassId != nameof(DebugRainbow))
             {
-                InputTransparent = true,
-                HorizontalItemSize = GetHorizontalItemSize(page),
-                VerticalItemSize = GetVerticalItemSize(page),
-                MajorGridLineColor = GetMajorGridLineColor(page),
-                GridLineColor = GetGridLineColor(page),
-                MajorGridLineOpacity = GetMajorGridLineOpacity(page),
-                GridLineOpacity = GetGridLineOpacity(page),
-                MajorGridLineInterval = GetMajorGridLineInterval(page),
-                MajorGridLineWidth = GetMajorGridLineWidth(page),
-                GridLineWidth = GetGridLineWidth(page),
-                Margin = GetGridPadding(page),
-                MakeGridRainbows = GetMakeGridRainbows(page),
-                Inverse = GetInverse(page)
-            };
+                View pageContent = page.Content;
+                page.Content = null;
 
-            Grid newContent = new Grid();
-            newContent.Children.Add(pageContent);
-            newContent.Children.Add(gridContent);
+                var gridContent = new DebugGridWrapper
+                {
+                    HorizontalItemSize = GetHorizontalItemSize(page),
+                    VerticalItemSize = GetVerticalItemSize(page),
+                    MajorGridLineColor = GetMajorGridLineColor(page),
+                    GridLineColor = GetGridLineColor(page),
+                    MajorGridLineOpacity = GetMajorGridLineOpacity(page),
+                    GridLineOpacity = GetGridLineOpacity(page),
+                    MajorGridLineInterval = GetMajorGridLineInterval(page),
+                    MajorGridLineWidth = GetMajorGridLineWidth(page),
+                    GridLineWidth = GetGridLineWidth(page),
+                    Margin = GetGridPadding(page),
+                    MakeGridRainbows = GetMakeGridRainbows(page),
+                    Inverse = GetInverse(page),
+                    HeightRequest = pageContent.Height,
+                    WidthRequest = pageContent.Width
+                };
 
-            page.Content = newContent;
+                Grid newContent = new Grid()
+                {
+                    ClassId = nameof(DebugRainbow),
+                    HeightRequest = pageContent.Height,
+                    WidthRequest = pageContent.Width
+                };
+
+                newContent.Children.Add(pageContent);
+                newContent.Children.Add(gridContent);
+
+                page.Content = newContent;
+            }
         }
 
         private static void IterateChildren(Element content)

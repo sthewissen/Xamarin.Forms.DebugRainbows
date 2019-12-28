@@ -7,6 +7,7 @@ using AView = Android.Views.View;
 using Android.Graphics;
 using Android.Util;
 using Android.App;
+using System.Linq;
 
 [assembly: ExportRenderer(typeof(DebugGridWrapper), typeof(DebugGridWrapperRendererDroid))]
 namespace Xamarin.Forms.DebugRainbows
@@ -37,8 +38,8 @@ namespace Xamarin.Forms.DebugRainbows
                     GridLineOpacity = grid.GridLineOpacity,
                     MajorGridLineThickness = grid.MajorGridLineWidth,
                     GridLineThickness = grid.GridLineWidth,
-                    Padding = grid.Padding,
-                    MakeGridRainbows = grid.MakeGridRainbows
+                    MakeGridRainbows = grid.MakeGridRainbows,
+                    Inverse = grid.Inverse
                 });
             }
         }
@@ -58,8 +59,8 @@ namespace Xamarin.Forms.DebugRainbows
         public double GridLineOpacity { get; set; }
         public double MajorGridLineThickness { get; set; }
         public double GridLineThickness { get; set; }
-        public Thickness Padding { get; set; }
         public bool MakeGridRainbows { get; set; }
+        public bool Inverse { get; set; }
 
         public DebugGridViewDroid(Context context) : base(context)
         {
@@ -94,59 +95,96 @@ namespace Xamarin.Forms.DebugRainbows
         {
             base.OnDraw(canvas);
 
-            var majorPaint = new Paint
-            {
-                StrokeWidth = ConvertDpToPixel((float)MajorGridLineThickness, Context),
-                Color = MajorGridLineColor.ToAndroid(),
-                Alpha = (int)(255 * MajorGridLineOpacity)
+            var majorPaint = new Paint();
+            var minorPaint = new Paint();
+
+            var colors = new[] {
+                Color.FromHex("#f3855b").ToAndroid(),
+                Color.FromHex("#fbcf93").ToAndroid(),
+                Color.FromHex("#fbe960").ToAndroid(),
+                Color.FromHex("#a0e67a").ToAndroid(),
+                Color.FromHex("#33c6ee").ToAndroid(),
+                Color.FromHex("#c652ba").ToAndroid()
             };
 
-            var Paint = new Paint
+            if (Inverse)
             {
-                StrokeWidth = ConvertDpToPixel((float)GridLineThickness, Context),
-                Color = GridLineColor.ToAndroid(),
-                Alpha = (int)(255 * GridLineOpacity)
-            };
+                majorPaint.StrokeWidth = 0;
+                majorPaint.Color = GridLineColor.ToAndroid();
+                majorPaint.Alpha = (int)(255 * GridLineOpacity);
 
-            if (MakeGridRainbows)
-            {
-                var colors = new int[] {
-                        Color.FromHex("#f3855b").ToAndroid().ToArgb(),
-                        Color.FromHex("#fbcf93").ToAndroid().ToArgb(),
-                        Color.FromHex("#fbe960").ToAndroid().ToArgb(),
-                        Color.FromHex("#a0e67a").ToAndroid().ToArgb(),
-                        Color.FromHex("#33c6ee").ToAndroid().ToArgb(),
-                        Color.FromHex("#c652ba").ToAndroid().ToArgb()
-                };
+                var horizontalTotal = 0;
+                for (int i = 1; horizontalTotal < screenWidth; i++)
+                {
+                    var verticalTotal = 0;
+                    var horizontalSpacerSize = MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? ConvertDpToPixel((float)MajorGridLineThickness, Context) : ConvertDpToPixel((float)GridLineThickness, Context);
 
-                var a = canvas.Width * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.75) / 2)), 2);
-                var b = canvas.Height * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.0) / 2)), 2);
-                var c = canvas.Width * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.25) / 2)), 2);
-                var d = canvas.Height * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.5) / 2)), 2);
+                    for (int j = 1; verticalTotal < screenHeight; j++)
+                    {
+                        var verticalSpacerSize = MajorGridLineInterval > 0 && j % MajorGridLineInterval == 0 ? ConvertDpToPixel((float)MajorGridLineThickness, Context) : ConvertDpToPixel((float)GridLineThickness, Context);
 
-                var locations = new float[] { 0, 0.2f, 0.4f, 0.6f, 0.8f, 1 };
+                        var rectangle = new Rect(
+                            (int)horizontalTotal,
+                            (int)verticalTotal,
+                            (int)(horizontalTotal + ConvertDpToPixel((float)HorizontalItemSize, Context)),
+                            (int)(verticalTotal + ConvertDpToPixel((float)VerticalItemSize, Context))
+                        );
 
-                var shader = new LinearGradient(canvas.Width - (float)a, (float)b, canvas.Width - (float)c, (float)d, colors, locations, Shader.TileMode.Clamp);
-                Paint.SetShader(shader);
-                majorPaint.SetShader(shader);
+                        if (MakeGridRainbows)
+                        {
+                            var color = colors[(i + j) % colors.Length];
+                            majorPaint.Color = color;
+                        }
+
+                        canvas.DrawRect(rectangle, majorPaint);
+
+                        verticalTotal += (int)(ConvertDpToPixel((float)VerticalItemSize, Context) + verticalSpacerSize);
+                    }
+
+                    horizontalTotal += (int)(ConvertDpToPixel((float)HorizontalItemSize, Context) + horizontalSpacerSize);
+                }
             }
-
-            float verticalPosition = 0;
-            int i = 0;
-            while (verticalPosition <= screenHeight)
+            else
             {
-                canvas.DrawLine(0, verticalPosition, screenWidth, verticalPosition, i % MajorGridLineInterval == 0 ? majorPaint : Paint);
-                verticalPosition += ConvertDpToPixel((float)VerticalItemSize, Context);
-                i++;
-            }
+                if (MakeGridRainbows)
+                {
+                    var a = canvas.Width * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.75) / 2)), 2);
+                    var b = canvas.Height * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.0) / 2)), 2);
+                    var c = canvas.Width * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.25) / 2)), 2);
+                    var d = canvas.Height * Math.Pow(Math.Sin(2 * Math.PI * ((90 + 0.5) / 2)), 2);
 
-            float horizontalPosition = 0;
-            i = 0;
-            while (horizontalPosition <= screenWidth)
-            {
-                canvas.DrawLine(horizontalPosition, 0, horizontalPosition, screenHeight, i % MajorGridLineInterval == 0 ? majorPaint : Paint);
-                horizontalPosition += ConvertDpToPixel((float)HorizontalItemSize, Context);
-                i++;
+                    var locations = new float[] { 0, 0.2f, 0.4f, 0.6f, 0.8f, 1 };
+                    var shader = new LinearGradient(canvas.Width - (float)a, (float)b, canvas.Width - (float)c, (float)d, colors.Select(x => (int)x.ToArgb()).ToArray(), locations, Shader.TileMode.Clamp);
+
+                    minorPaint.SetShader(shader);
+                    majorPaint.SetShader(shader);
+                }
+
+                majorPaint.StrokeWidth = ConvertDpToPixel((float)MajorGridLineThickness, Context);
+                majorPaint.Color = MajorGridLineColor.ToAndroid();
+                majorPaint.Alpha = (int)(255 * MajorGridLineOpacity);
+
+                minorPaint.StrokeWidth = ConvertDpToPixel((float)GridLineThickness, Context);
+                minorPaint.Color = GridLineColor.ToAndroid();
+                minorPaint.Alpha = (int)(255 * GridLineOpacity);
+
+                float verticalPosition = 0;
+                int i = 0;
+                while (verticalPosition <= screenHeight)
+                {
+                    canvas.DrawLine(0, verticalPosition, screenWidth, verticalPosition, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
+                    verticalPosition += ConvertDpToPixel((float)VerticalItemSize, Context);
+                    i++;
+                }
+
+                float horizontalPosition = 0;
+                i = 0;
+                while (horizontalPosition <= screenWidth)
+                {
+                    canvas.DrawLine(horizontalPosition, 0, horizontalPosition, screenHeight, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
+                    horizontalPosition += ConvertDpToPixel((float)HorizontalItemSize, Context);
+                    i++;
+                }
             }
         }
     }

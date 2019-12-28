@@ -5,36 +5,41 @@ using CoreGraphics;
 using UIKit;
 using Xamarin.Forms.DebugRainbows;
 using CoreAnimation;
+using System.ComponentModel;
 
 [assembly: ExportRenderer(typeof(DebugGridWrapper), typeof(DebugGridWrapperRendereriOS))]
 namespace Xamarin.Forms.DebugRainbows
 {
     public class DebugGridWrapperRendereriOS : ViewRenderer<DebugGridWrapper, UIView>
     {
+        UIView _contentView;
+
         protected override void OnElementChanged(ElementChangedEventArgs<DebugGridWrapper> e)
         {
-            base.OnElementChanged(e);
-
             if (e.NewElement != null)
             {
-                var grid = e.NewElement as DebugGridWrapper;
-
-                SetNativeControl(new DebugGridViewiOS
+                if (Control == null)
                 {
-                    HorizontalItemSize = grid.HorizontalItemSize,
-                    VerticalItemSize = grid.VerticalItemSize,
-                    MajorGridLineInterval = grid.MajorGridLineInterval,
-                    MajorGridLineColor = grid.MajorGridLineColor,
-                    GridLineColor = grid.GridLineColor,
-                    MajorGridLineOpacity = grid.MajorGridLineOpacity,
-                    GridLineOpacity = grid.GridLineOpacity,
-                    MajorGridLineThickness = grid.MajorGridLineWidth,
-                    GridLineThickness = grid.GridLineWidth,
-                    Padding = grid.Padding,
-                    MakeGridRainbows = grid.MakeGridRainbows,
-                    Inverse = grid.Inverse
-                });
+                    var grid = e.NewElement as DebugGridWrapper;
+
+                    SetNativeControl(new DebugGridViewiOS()
+                    {
+                        HorizontalItemSize = grid.HorizontalItemSize,
+                        VerticalItemSize = grid.VerticalItemSize,
+                        MajorGridLineInterval = grid.MajorGridLineInterval,
+                        MajorGridLineColor = grid.MajorGridLineColor,
+                        GridLineColor = grid.GridLineColor,
+                        MajorGridLineOpacity = grid.MajorGridLineOpacity,
+                        GridLineOpacity = grid.GridLineOpacity,
+                        MajorGridLineThickness = grid.MajorGridLineWidth,
+                        GridLineThickness = grid.GridLineWidth,
+                        MakeGridRainbows = grid.MakeGridRainbows,
+                        Inverse = grid.Inverse
+                    });
+                }
             }
+
+            base.OnElementChanged(e);
         }
     }
 
@@ -62,13 +67,13 @@ namespace Xamarin.Forms.DebugRainbows
         public double GridLineOpacity { get; set; }
         public double MajorGridLineThickness { get; set; }
         public double GridLineThickness { get; set; }
-        public Thickness Padding { get; set; }
         public bool MakeGridRainbows { get; set; }
         public bool Inverse { get; set; }
 
         public DebugGridViewiOS()
         {
             BackgroundColor = UIColor.Clear;
+            ContentMode = UIViewContentMode.Redraw;
         }
 
         private void DrawGrid(CGRect rect)
