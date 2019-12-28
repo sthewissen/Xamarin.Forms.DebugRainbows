@@ -56,7 +56,7 @@ Install this package into your shared project and your platform specific project
 
 **Apply to every `Xamarin.Forms.ContentPage`**
 
-In `App.xaml`, we can add a `Style` to our `ResourceDictionary`
+In `App.xaml`, we can add a `Style` to our `ResourceDictionary`:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
