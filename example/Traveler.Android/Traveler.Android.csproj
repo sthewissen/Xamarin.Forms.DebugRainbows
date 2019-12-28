@@ -48,14 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.581479" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.1" />
-    <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.1" />
-    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.1" />
-    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Forms.PancakeView">
-      <Version>1.2.1</Version>
+      <Version>1.3.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>
@@ -128,6 +128,10 @@
     <ProjectReference Include="..\Traveler\Traveler.csproj">
       <Project>{DF91048E-3095-4613-9C33-C0BB1733B9B7}</Project>
       <Name>Traveler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Xamarin.Forms.DebugRainbows.Multi\Xamarin.Forms.DebugRainbows.Multi.csproj">
+      <Project>{E7999FC8-1966-4FD2-866E-4F775A32F7D3}</Project>
+      <Name>Xamarin.Forms.DebugRainbows.Multi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

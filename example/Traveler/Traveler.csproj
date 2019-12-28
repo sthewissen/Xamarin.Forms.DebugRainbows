@@ -10,9 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.581479" />
-    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.2.1" />
-    <PackageReference Include="Xamarin.Forms.DebugRainbows" Version="1.0.16" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Effects\" />
