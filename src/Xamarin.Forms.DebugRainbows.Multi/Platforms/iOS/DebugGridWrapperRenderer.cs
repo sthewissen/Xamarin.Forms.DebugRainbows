@@ -93,34 +93,71 @@ namespace Xamarin.Forms.DebugRainbows
 
         private void DrawInverseGridLayer(CGRect rect)
         {
-            var horizontalTotal = 0;
             var context = UIGraphics.GetCurrentContext();
 
             context.SetFillColor(GridLineColor.ToCGColor());
             context.SetAlpha((nfloat)GridLineOpacity);
 
-            for (int i = 1; horizontalTotal < Bounds.Size.Width; i++)
+            if (GridOrigin == DebugGridOrigin.TopLeft)
             {
-                var verticalTotal = 0;
-                var horizontalSpacerSize = MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
+                var horizontalTotal = Bounds.Size.Width;
 
-                for (int j = 1; verticalTotal < Bounds.Size.Height; j++)
+                for (int i = 1; horizontalTotal < Bounds.Size.Width; i++)
                 {
-                    var verticalSpacerSize = MajorGridLineInterval > 0 && j % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
-                    var rectangle = new CGRect(horizontalTotal, verticalTotal, HorizontalItemSize, VerticalItemSize);
+                    var verticalTotal = 0;
+                    var horizontalSpacerSize = MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
 
-                    if (MakeGridRainbows)
+                    for (int j = 1; verticalTotal < Bounds.Size.Height; j++)
                     {
-                        var color = rainbowColors[(i + j) % rainbowColors.Length];
-                        context.SetFillColor(color);
+                        var verticalSpacerSize = MajorGridLineInterval > 0 && j % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
+                        var rectangle = new CGRect(horizontalTotal, verticalTotal, HorizontalItemSize, VerticalItemSize);
+
+                        if (MakeGridRainbows)
+                        {
+                            var color = rainbowColors[(i + j) % rainbowColors.Length];
+                            context.SetFillColor(color);
+                        }
+
+                        context.FillRect(rectangle);
+
+                        verticalTotal += (int)(VerticalItemSize + verticalSpacerSize);
                     }
 
-                    context.FillRect(rectangle);
-
-                    verticalTotal += (int)(VerticalItemSize + verticalSpacerSize);
+                    horizontalTotal += (int)(HorizontalItemSize + horizontalSpacerSize);
                 }
+            }
+            else if (GridOrigin == DebugGridOrigin.Center)
+            {
+                var horizontalRightTotal = (Bounds.Size.Width / 2) + ((MajorGridLineInterval > 0 ? MajorGridLineThickness : GridLineThickness) / 2);
+                var horizontalLeftTotal = (Bounds.Size.Width / 2) - (int)(HorizontalItemSize + ((MajorGridLineInterval > 0 ? MajorGridLineThickness : GridLineThickness) / 2));
 
-                horizontalTotal += (int)(HorizontalItemSize + horizontalSpacerSize);
+                for (int i = 1; horizontalRightTotal < Bounds.Size.Width; i++)
+                {
+                    var horizontalSpacerSize = MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
+                    var verticalTotal = 0;
+
+                    for (int j = 1; verticalTotal < Bounds.Size.Height; j++)
+                    {
+                        if (MakeGridRainbows)
+                        {
+                            var color = rainbowColors[(i + j) % rainbowColors.Length];
+                            context.SetFillColor(color);
+                        }
+
+                        var verticalSpacerSize = MajorGridLineInterval > 0 && j % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
+
+                        var rectangle = new CGRect(horizontalRightTotal, verticalTotal, HorizontalItemSize, VerticalItemSize);
+                        context.FillRect(rectangle);
+
+                        var rectangle2 = new CGRect(horizontalLeftTotal, verticalTotal, HorizontalItemSize, VerticalItemSize);
+                        context.FillRect(rectangle2);
+
+                        verticalTotal += (int)(VerticalItemSize + verticalSpacerSize);
+                    }
+
+                    horizontalRightTotal += (int)(HorizontalItemSize + horizontalSpacerSize);
+                    horizontalLeftTotal -= (int)(HorizontalItemSize + horizontalSpacerSize);
+                }
             }
         }
 
