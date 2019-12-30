@@ -39,7 +39,8 @@ namespace Xamarin.Forms.DebugRainbows
                     MajorGridLineThickness = grid.MajorGridLineWidth,
                     GridLineThickness = grid.GridLineWidth,
                     MakeGridRainbows = grid.MakeGridRainbows,
-                    Inverse = grid.Inverse
+                    Inverse = grid.Inverse,
+                    GridOrigin = grid.GridOrigin
                 });
             }
         }
@@ -61,6 +62,7 @@ namespace Xamarin.Forms.DebugRainbows
         public double GridLineThickness { get; set; }
         public bool MakeGridRainbows { get; set; }
         public bool Inverse { get; set; }
+        public DebugGridOrigin GridOrigin { get; set; }
 
         public DebugGridViewDroid(Context context) : base(context)
         {

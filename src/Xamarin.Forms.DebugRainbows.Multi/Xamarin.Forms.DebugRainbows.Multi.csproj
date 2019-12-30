@@ -54,5 +54,10 @@
     <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
         <Compile Include="Platforms\Android\**\*.cs" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Platforms\Shared\DebugGridOrigin.cs">
+        <SubType></SubType>
+      </Compile>
+    </ItemGroup>
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

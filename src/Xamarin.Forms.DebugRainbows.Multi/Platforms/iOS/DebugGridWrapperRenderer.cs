@@ -34,7 +34,8 @@ namespace Xamarin.Forms.DebugRainbows
                         MajorGridLineThickness = grid.MajorGridLineWidth,
                         GridLineThickness = grid.GridLineWidth,
                         MakeGridRainbows = grid.MakeGridRainbows,
-                        Inverse = grid.Inverse
+                        Inverse = grid.Inverse,
+                        GridOrigin = grid.GridOrigin
                     });
                 }
             }
@@ -69,6 +70,7 @@ namespace Xamarin.Forms.DebugRainbows
         public double GridLineThickness { get; set; }
         public bool MakeGridRainbows { get; set; }
         public bool Inverse { get; set; }
+        public DebugGridOrigin GridOrigin { get; set; }
 
         public DebugGridViewiOS()
         {
@@ -94,6 +96,9 @@ namespace Xamarin.Forms.DebugRainbows
             var horizontalTotal = 0;
             var context = UIGraphics.GetCurrentContext();
 
+            context.SetFillColor(GridLineColor.ToCGColor());
+            context.SetAlpha((nfloat)GridLineOpacity);
+
             for (int i = 1; horizontalTotal < Bounds.Size.Width; i++)
             {
                 var verticalTotal = 0;
@@ -108,12 +113,6 @@ namespace Xamarin.Forms.DebugRainbows
                     {
                         var color = rainbowColors[(i + j) % rainbowColors.Length];
                         context.SetFillColor(color);
-                        context.SetAlpha((nfloat)GridLineOpacity);
-                    }
-                    else
-                    {
-                        context.SetFillColor(GridLineColor.ToCGColor());
-                        context.SetAlpha((nfloat)GridLineOpacity);
                     }
 
                     context.FillRect(rectangle);
@@ -155,6 +154,7 @@ namespace Xamarin.Forms.DebugRainbows
                         Colors = rainbowColors,
                         Mask = layer
                     };
+
                     this.Layer.AddSublayer(gradientLayer);
                 }
             }
@@ -166,37 +166,71 @@ namespace Xamarin.Forms.DebugRainbows
             var gridLinesHorizontal = Bounds.Width / HorizontalItemSize;
             var gridLinesVertical = Bounds.Height / VerticalItemSize;
 
-            for (int i = 0; i < gridLinesHorizontal; i++)
+            if (GridOrigin == DebugGridOrigin.TopLeft)
             {
-                if (interval == 0 || i % interval == 0)
+                for (int i = 0; i < gridLinesHorizontal; i++)
                 {
-                    var start = new CGPoint(x: (nfloat)i * HorizontalItemSize, y: 0);
-                    var end = new CGPoint(x: (nfloat)i * HorizontalItemSize, y: Bounds.Height);
-                    path.MoveTo(start);
-                    path.AddLineTo(end);
+                    if (interval == 0 || i % interval == 0)
+                    {
+                        var start = new CGPoint(x: (nfloat)i * HorizontalItemSize, y: 0);
+                        var end = new CGPoint(x: (nfloat)i * HorizontalItemSize, y: Bounds.Height);
+                        path.MoveTo(start);
+                        path.AddLineTo(end);
+                    }
+                }
+
+                for (int i = 0; i < gridLinesVertical; i++)
+                {
+                    if (interval == 0 || i % interval == 0)
+                    {
+                        var start = new CGPoint(x: 0, y: (nfloat)i * VerticalItemSize);
+                        var end = new CGPoint(x: Bounds.Width, y: (nfloat)i * VerticalItemSize);
+                        path.MoveTo(start);
+                        path.AddLineTo(end);
+                    }
+                }
+
+                path.ClosePath();
+            }
+            else if (GridOrigin == DebugGridOrigin.Center)
+            {
+                var gridLinesHorizontalCenter = Bounds.Width / 2;
+                var gridLinesVerticalCenter = Bounds.Height / 2;
+
+                for (int i = 0; i < (gridLinesHorizontal / 2); i++)
+                {
+                    if (interval == 0 || i % interval == 0)
+                    {
+                        var startRight = new CGPoint(x: gridLinesHorizontalCenter + ((nfloat)i * HorizontalItemSize), y: 0);
+                        var endRight = new CGPoint(x: gridLinesHorizontalCenter + ((nfloat)i * HorizontalItemSize), y: Bounds.Height);
+                        path.MoveTo(startRight);
+                        path.AddLineTo(endRight);
+
+                        var startLeft = new CGPoint(x: gridLinesHorizontalCenter - ((nfloat)i * HorizontalItemSize), y: 0);
+                        var endLeft = new CGPoint(x: gridLinesHorizontalCenter - ((nfloat)i * HorizontalItemSize), y: Bounds.Height);
+                        path.MoveTo(startLeft);
+                        path.AddLineTo(endLeft);
+                    }
+                }
+
+                for (int i = 0; i < (gridLinesVertical / 2); i++)
+                {
+                    if (interval == 0 || i % interval == 0)
+                    {
+                        var startBottom = new CGPoint(x: 0, y: gridLinesVerticalCenter + ((nfloat)i * VerticalItemSize));
+                        var endBottom = new CGPoint(x: Bounds.Width, y: gridLinesVerticalCenter + ((nfloat)i * VerticalItemSize));
+                        path.MoveTo(startBottom);
+                        path.AddLineTo(endBottom);
+
+                        var startTop = new CGPoint(x: 0, y: gridLinesVerticalCenter - ((nfloat)i * VerticalItemSize));
+                        var endTop = new CGPoint(x: Bounds.Width, y: gridLinesVerticalCenter - ((nfloat)i * VerticalItemSize));
+                        path.MoveTo(startTop);
+                        path.AddLineTo(endTop);
+                    }
                 }
             }
-
-            for (int i = 0; i < gridLinesVertical; i++)
-            {
-                if (interval == 0 || i % interval == 0)
-                {
-                    var start = new CGPoint(x: 0, y: (nfloat)i * VerticalItemSize);
-                    var end = new CGPoint(x: Bounds.Width, y: (nfloat)i * VerticalItemSize);
-                    path.MoveTo(start);
-                    path.AddLineTo(end);
-                }
-            }
-
-            path.ClosePath();
 
             return path;
-        }
-
-        private void RemoveGrid()
-        {
-            _gridLayer?.RemoveFromSuperLayer();
-            _majorGridLayer?.RemoveFromSuperLayer();
         }
 
         public override void Draw(CGRect rect)

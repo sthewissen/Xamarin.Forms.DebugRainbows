@@ -41,6 +41,8 @@ namespace Xamarin.Forms.DebugRainbows
         public static readonly BindableProperty MakeGridRainbowsProperty = BindableProperty.CreateAttached("MakeGridRainbows", typeof(bool), typeof(Page), default(bool));
         public static readonly BindableProperty InverseProperty = BindableProperty.CreateAttached("Inverse", typeof(bool), typeof(Page), default(bool));
 
+        public static readonly BindableProperty GridOriginProperty = BindableProperty.CreateAttached("GridOrigin", typeof(DebugGridOrigin), typeof(Page), defaultValue: DebugGridOrigin.TopLeft);
+
         public static void SetShowColors(BindableObject b, bool value)
         {
             b.SetValue(ShowColorsProperty, value);
@@ -181,6 +183,16 @@ namespace Xamarin.Forms.DebugRainbows
             return (bool)b.GetValue(ShowGridProperty);
         }
 
+        public static void SetGridOrigin(BindableObject b, DebugGridOrigin value)
+        {
+            b.SetValue(GridOriginProperty, value);
+        }
+
+        public static DebugGridOrigin GetGridOrigin(BindableObject b)
+        {
+            return (DebugGridOrigin)b.GetValue(GridOriginProperty);
+        }
+
         static void OnShowDebugModeChanged(BindableObject bindable, bool oldValue, bool newValue)
         {
 #if DEBUG
@@ -290,7 +302,8 @@ namespace Xamarin.Forms.DebugRainbows
                     MakeGridRainbows = GetMakeGridRainbows(page),
                     Inverse = GetInverse(page),
                     HeightRequest = pageContent.Height,
-                    WidthRequest = pageContent.Width
+                    WidthRequest = pageContent.Width,
+                    GridOrigin = GetGridOrigin(page)
                 };
 
                 Grid newContent = new Grid()
@@ -313,7 +326,10 @@ namespace Xamarin.Forms.DebugRainbows
             {
                 if (content.GetType().IsSubclassOf(typeof(Layout)))
                 {
-                    ((Layout)content).BackgroundColor = GetRandomColor();
+                    if (content.GetType() != typeof(DebugGridWrapper))
+                    {
+                        ((Layout)content).BackgroundColor = GetRandomColor();
+                    }
 
                     foreach (var item in ((Layout)content).Children)
                     {
