@@ -100,7 +100,7 @@ namespace Xamarin.Forms.DebugRainbows
 
             if (GridOrigin == DebugGridOrigin.TopLeft)
             {
-                var horizontalTotal = Bounds.Size.Width;
+                var horizontalTotal = 0;
 
                 for (int i = 1; horizontalTotal < Bounds.Size.Width; i++)
                 {
@@ -134,9 +134,10 @@ namespace Xamarin.Forms.DebugRainbows
                 for (int i = 1; horizontalRightTotal < Bounds.Size.Width; i++)
                 {
                     var horizontalSpacerSize = MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
-                    var verticalTotal = 0;
+                    var verticalBottomTotal = (Bounds.Size.Height / 2) + ((MajorGridLineInterval > 0 ? MajorGridLineThickness : GridLineThickness) / 2);
+                    var verticalTopTotal = (Bounds.Size.Height / 2) - (int)(VerticalItemSize + ((MajorGridLineInterval > 0 ? MajorGridLineThickness : GridLineThickness) / 2));
 
-                    for (int j = 1; verticalTotal < Bounds.Size.Height; j++)
+                    for (int j = 1; verticalBottomTotal < Bounds.Size.Height; j++)
                     {
                         if (MakeGridRainbows)
                         {
@@ -146,13 +147,20 @@ namespace Xamarin.Forms.DebugRainbows
 
                         var verticalSpacerSize = MajorGridLineInterval > 0 && j % MajorGridLineInterval == 0 ? MajorGridLineThickness : GridLineThickness;
 
-                        var rectangle = new CGRect(horizontalRightTotal, verticalTotal, HorizontalItemSize, VerticalItemSize);
+                        var rectangle = new CGRect(horizontalRightTotal, verticalBottomTotal, HorizontalItemSize, VerticalItemSize);
                         context.FillRect(rectangle);
 
-                        var rectangle2 = new CGRect(horizontalLeftTotal, verticalTotal, HorizontalItemSize, VerticalItemSize);
+                        var rectangle2 = new CGRect(horizontalLeftTotal, verticalTopTotal, HorizontalItemSize, VerticalItemSize);
                         context.FillRect(rectangle2);
 
-                        verticalTotal += (int)(VerticalItemSize + verticalSpacerSize);
+                        var rectangle3 = new CGRect(horizontalRightTotal, verticalTopTotal, HorizontalItemSize, VerticalItemSize);
+                        context.FillRect(rectangle3);
+
+                        var rectangle4 = new CGRect(horizontalLeftTotal, verticalBottomTotal, HorizontalItemSize, VerticalItemSize);
+                        context.FillRect(rectangle4);
+
+                        verticalTopTotal -= (int)(VerticalItemSize + verticalSpacerSize);
+                        verticalBottomTotal += (int)(VerticalItemSize + verticalSpacerSize);
                     }
 
                     horizontalRightTotal += (int)(HorizontalItemSize + horizontalSpacerSize);

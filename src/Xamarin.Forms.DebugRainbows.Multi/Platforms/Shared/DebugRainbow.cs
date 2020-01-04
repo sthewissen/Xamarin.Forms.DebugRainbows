@@ -41,7 +41,7 @@ namespace Xamarin.Forms.DebugRainbows
         public static readonly BindableProperty MakeGridRainbowsProperty = BindableProperty.CreateAttached("MakeGridRainbows", typeof(bool), typeof(Page), default(bool));
         public static readonly BindableProperty InverseProperty = BindableProperty.CreateAttached("Inverse", typeof(bool), typeof(Page), default(bool));
 
-        public static readonly BindableProperty GridOriginProperty = BindableProperty.CreateAttached("GridOrigin", typeof(DebugGridOrigin), typeof(Page), defaultValue: DebugGridOrigin.TopLeft);
+        public static readonly BindableProperty GridOriginProperty = BindableProperty.CreateAttached("GridOrigin", typeof(DebugGridOrigin), typeof(Page), defaultValue: DebugGridOrigin.Center);
 
         public static void SetShowColors(BindableObject b, bool value)
         {
