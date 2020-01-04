@@ -18,6 +18,7 @@ Have you ever had a piece of XAML code that didn't produce the layout you expect
 | `GridLineColor` | Defines a color for the grid lines or blocks (depending on `Inverse`). |
 | `GridLineOpacity` | The opacity of the grid lines in the overlay. | 
 | `GridLineWidth` | The width of the grid lines or between each block (depending on `Inverse`). | 
+| `GridOrigin` | Where the first line is drawn. Either `TopLeft` or `Center`. | 
 | `GridPadding` | Pads the entire overlay. Takes a `Thickness` object. | 
 | `HorizontalSpacing` | Width between grid lines or the width of the blocks (depending on `Inverse`). |
 | `Inverse` | Either draws grid lines (`false`) or block view (`true`). | 
