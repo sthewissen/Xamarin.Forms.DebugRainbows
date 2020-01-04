@@ -16,6 +16,7 @@ namespace Xamarin.Forms.DebugRainbows
         public double GridLineWidth { get; set; }
         public bool Inverse { get; set; }
         public bool MakeGridRainbows { get; set; }
+        public DebugGridOrigin GridOrigin { get; set; }
 
         public DebugGridWrapper()
         {
